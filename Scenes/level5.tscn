@@ -1,0 +1,246 @@
+[gd_scene load_steps=17 format=3 uid="uid://bed4q7nkcpr4s"]
+
+[ext_resource type="Script" uid="uid://c2wm4iogjmhhw" path="res://Scripts/Level5.gd" id="1_cklwl"]
+[ext_resource type="Texture2D" uid="uid://cqwl2cpry8ij4" path="res://Assets/Background/Table.png" id="2_fysvu"]
+[ext_resource type="Texture2D" uid="uid://cm8ar2w1ar0v1" path="res://Assets/Background/OfficeChair.png" id="5_dpg5n"]
+[ext_resource type="Texture2D" uid="uid://k1r76x3prtwe" path="res://Assets/Background/ShelfSide.png" id="5_unpoq"]
+[ext_resource type="Texture2D" uid="uid://b5rr2bn621uqt" path="res://Assets/Background/DoorOpened.png" id="6_o74cx"]
+[ext_resource type="Texture2D" uid="uid://dpuped1oih34q" path="res://Assets/Background/Sign4.png" id="7_5jbms"]
+[ext_resource type="Texture2D" uid="uid://bx22bmgne5n2y" path="res://Assets/Background/FlatSurface.png" id="7_xviwm"]
+[ext_resource type="Texture2D" uid="uid://djvx40uv4ew0d" path="res://Assets/Background/Plant2.png" id="8_o74cx"]
+[ext_resource type="Texture2D" uid="uid://bnjgdohrotji3" path="res://Assets/Background/Vent1.png" id="12_40uaq"]
+[ext_resource type="AudioStream" uid="uid://cntfu8i8mvlu2" path="res://Assets/SFX/Register Scan.wav" id="12_o74cx"]
+[ext_resource type="PackedScene" uid="uid://d4ucdq7cuosw" path="res://Scenes/office_door.tscn" id="14_dpg5n"]
+[ext_resource type="PackedScene" uid="uid://t04rua8ugjdx" path="res://Scenes/clown_car.tscn" id="15_csg1d"]
+[ext_resource type="PackedScene" uid="uid://cgvp7yocw0olx" path="res://Scenes/boardroom_buffoonery.tscn" id="16_5jbms"]
+[ext_resource type="PackedScene" uid="uid://dvq7lryf0brtk" path="res://Scenes/Player.tscn" id="17_h51mq"]
+[ext_resource type="AudioStream" uid="uid://bju5ibhuswlfy" path="res://Assets/Music/Quircky Shop.wav" id="18_nks4y"]
+[ext_resource type="AudioStream" uid="uid://cwie23idkllb8" path="res://Assets/SFX/Announcement 2.wav" id="21_birjf"]
+
+[node name="Level5" type="Node2D"]
+script = ExtResource("1_cklwl")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+z_index = -12
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.817521, 0.817521, 0.817521, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Background"]
+z_index = -12
+offset_right = 1152.0
+offset_bottom = 212.0
+color = Color(0.593134, 0.593134, 0.593134, 1)
+
+[node name="BackgroundObjects" type="Node2D" parent="."]
+position = Vector2(0, 20)
+
+[node name="Table" type="TextureRect" parent="BackgroundObjects"]
+z_index = 3
+offset_left = -478.0
+offset_top = 413.0
+offset_right = -222.0
+offset_bottom = 541.0
+rotation = -0.174533
+scale = Vector2(4, 2)
+texture = ExtResource("2_fysvu")
+
+[node name="TableLeg" type="TextureRect" parent="BackgroundObjects"]
+offset_left = 286.0
+offset_top = 340.0
+offset_right = 326.0
+offset_bottom = 420.0
+rotation = -0.0872665
+scale = Vector2(1, 4)
+texture = ExtResource("5_unpoq")
+
+[node name="TableSurface" type="TextureRect" parent="BackgroundObjects"]
+z_index = 3
+offset_left = 349.0
+offset_top = 350.0
+offset_right = 389.0
+offset_bottom = 398.0
+rotation = -0.436332
+scale = Vector2(2, 2)
+texture = ExtResource("7_xviwm")
+
+[node name="TableSurface2" type="TextureRect" parent="BackgroundObjects"]
+z_index = 3
+offset_left = 257.0
+offset_top = 310.0
+offset_right = 297.0
+offset_bottom = 358.0
+rotation = 1.39626
+scale = Vector2(2, 2)
+texture = ExtResource("7_xviwm")
+
+[node name="TableSurface3" type="TextureRect" parent="BackgroundObjects"]
+z_index = 3
+offset_left = 316.0
+offset_top = 421.0
+offset_right = 356.0
+offset_bottom = 469.0
+rotation = 1.309
+scale = Vector2(2, 2)
+texture = ExtResource("7_xviwm")
+
+[node name="TableSurface4" type="TextureRect" parent="BackgroundObjects"]
+z_index = 3
+offset_left = 61.0
+offset_top = 334.0
+offset_right = 101.0
+offset_bottom = 382.0
+rotation = 1.39626
+scale = Vector2(2, 2)
+texture = ExtResource("7_xviwm")
+
+[node name="TableSurface5" type="TextureRect" parent="BackgroundObjects"]
+z_index = 3
+offset_left = 71.0
+offset_top = 481.0
+offset_right = 111.0
+offset_bottom = 529.0
+rotation = 1.39626
+scale = Vector2(2, 2)
+texture = ExtResource("7_xviwm")
+
+[node name="Chair" type="TextureRect" parent="BackgroundObjects"]
+z_index = 2
+offset_left = 309.0
+offset_top = 311.0
+offset_right = 437.0
+offset_bottom = 439.0
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("5_dpg5n")
+
+[node name="Chair2" type="TextureRect" parent="BackgroundObjects"]
+z_index = -5
+offset_left = 124.0
+offset_top = 68.0
+offset_right = 252.0
+offset_bottom = 196.0
+scale = Vector2(-1.1, 1.1)
+texture = ExtResource("5_dpg5n")
+
+[node name="Chair3" type="TextureRect" parent="BackgroundObjects"]
+z_index = 3
+offset_left = 963.0
+offset_top = 267.0
+offset_right = 1091.0
+offset_bottom = 395.0
+scale = Vector2(1.7, 1.7)
+texture = ExtResource("5_dpg5n")
+
+[node name="Door" type="TextureRect" parent="BackgroundObjects"]
+visible = false
+z_index = -3
+offset_left = 1031.0
+offset_top = -36.0
+offset_right = 1112.0
+offset_bottom = 195.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(1.5, 1.4)
+texture = ExtResource("6_o74cx")
+
+[node name="Whiteboard" type="TextureRect" parent="BackgroundObjects"]
+z_index = -5
+offset_left = 363.0
+offset_top = -11.0
+offset_right = 413.0
+offset_bottom = 38.0
+scale = Vector2(8, 4)
+texture = ExtResource("7_5jbms")
+
+[node name="Whiteboard2" type="ColorRect" parent="BackgroundObjects"]
+z_index = -4
+offset_left = 406.0
+offset_top = 14.0
+offset_right = 719.0
+offset_bottom = 159.0
+
+[node name="Plant" type="TextureRect" parent="BackgroundObjects"]
+z_index = -5
+offset_left = 879.0
+offset_top = 3.0
+offset_right = 981.0
+offset_bottom = 211.0
+texture = ExtResource("8_o74cx")
+
+[node name="Plant2" type="TextureRect" parent="BackgroundObjects"]
+z_index = -5
+offset_left = 796.0
+offset_top = 1.0
+offset_right = 898.0
+offset_bottom = 209.0
+texture = ExtResource("8_o74cx")
+
+[node name="Plant3" type="TextureRect" parent="BackgroundObjects"]
+z_index = 12
+offset_left = 986.0
+offset_top = 306.0
+offset_right = 1088.0
+offset_bottom = 700.0
+scale = Vector2(2, 1)
+texture = ExtResource("8_o74cx")
+
+[node name="Vent" type="TextureRect" parent="BackgroundObjects"]
+offset_left = 88.0
+offset_top = -9.0
+offset_right = 128.0
+offset_bottom = 31.0
+scale = Vector2(2, 1.5)
+texture = ExtResource("12_40uaq")
+
+[node name="BackgroundNPCs" type="Node2D" parent="."]
+
+[node name="WAVR" parent="." instance=ExtResource("17_h51mq")]
+
+[node name="NPC Slots" type="Node2D" parent="."]
+
+[node name="Spawn" type="Node2D" parent="NPC Slots"]
+position = Vector2(1153, 194)
+
+[node name="Wait 1" type="Node2D" parent="NPC Slots"]
+position = Vector2(793, 187)
+
+[node name="Wait 2" type="Node2D" parent="NPC Slots"]
+position = Vector2(741, 233)
+
+[node name="Wait 3" type="Node2D" parent="NPC Slots"]
+position = Vector2(823, 227)
+
+[node name="Wait 4" type="Node2D" parent="NPC Slots"]
+position = Vector2(776, 259)
+
+[node name="Exit" type="Node2D" parent="NPC Slots"]
+position = Vector2(-202, 140)
+
+[node name="BGshopperWait" type="Node2D" parent="NPC Slots"]
+position = Vector2(410, 72)
+
+[node name="BGshopperRightEnd" type="Node2D" parent="NPC Slots"]
+position = Vector2(641, 72)
+
+[node name="BGshopperLeftEnd" type="Node2D" parent="NPC Slots"]
+position = Vector2(201, 70)
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_nks4y")
+autoplay = true
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_o74cx")
+volume_db = -20.0
+
+[node name="SFX2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_birjf")
+volume_db = 10.0
+
+[node name="OfficeDoor" parent="." instance=ExtResource("14_dpg5n")]
+
+[node name="ClownCar" parent="." instance=ExtResource("15_csg1d")]
+
+[node name="BoardroomBuffoonery" parent="." instance=ExtResource("16_5jbms")]
