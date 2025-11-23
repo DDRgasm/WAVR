@@ -1,0 +1,786 @@
+[gd_scene load_steps=18 format=3 uid="uid://bl186qcdrajbe"]
+
+[ext_resource type="Texture2D" uid="uid://cj0wopubqg6ot" path="res://Assets/RightBot.png" id="1_pvgif"]
+[ext_resource type="Texture2D" uid="uid://bfdetcn4oqjkl" path="res://Assets/Wheel.png" id="2_rrkii"]
+[ext_resource type="Texture2D" uid="uid://b3hlxka4nsgpp" path="res://Assets/RobotCoil.png" id="3_1yuoj"]
+[ext_resource type="Texture2D" uid="uid://oan4v6faxxj2" path="res://Assets/NPC Mad.png" id="4_pvgif"]
+[ext_resource type="Texture2D" uid="uid://cc33ruge5mr8h" path="res://Assets/LeftBot.png" id="5_hi2tw"]
+[ext_resource type="Texture2D" uid="uid://vo7vv7v6ob2t" path="res://Assets/NPC Alert.png" id="6_uk67k"]
+[ext_resource type="Texture2D" uid="uid://bs3ma5osxju6m" path="res://Assets/NPC Flip.png" id="7_22wmb"]
+[ext_resource type="Texture2D" uid="uid://gas6txk5yp4k" path="res://Assets/BoxPalette.png" id="8_1qsaa"]
+[ext_resource type="AudioStream" uid="uid://bev0decp3qkbw" path="res://Assets/SFX/Coins falling on Counter.wav" id="9_rrkii"]
+
+[sub_resource type="Animation" id="Animation_rrkii"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Palette:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(64, -180)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightBot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(150, 50)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RightBot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LeftBot:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-113, 350)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LeftBot:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LeftBot:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.2, 1.2)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LeftBot/alert emote:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LeftBot/alert emote:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-170, -152.727)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("RightBot/RightBot:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(131, -100)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("RightBot/Coil:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(164, 36)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("RightBot/Coil:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("RightBot/RightBot:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("RightBot/confused emote:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(145.556, -152.222)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("RightBot/confused emote:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_pvgif"]
+resource_name = "level4act1"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Palette:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5.5, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(64, -180), Vector2(64, -180), Vector2(0, -180)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightBot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 5.5, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(150, 50), Vector2(150, 50), Vector2(118, 50), Vector2(54, 50)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RightBot:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LeftBot:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-113, 350)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LeftBot:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LeftBot:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.2, 1.2)]
+}
+
+[sub_resource type="Animation" id="Animation_1yuoj"]
+resource_name = "level4act2"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RightBot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(54, 50), Vector2(40, 50), Vector2(0, 50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightBot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftBot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.93333, 6.73333, 10, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-113, 350), Vector2(-96, 217), Vector2(-96, 217), Vector2(95, 48), Vector2(55, 48)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LeftBot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LeftBot:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2.9, 6.66667, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.2, 1.2), Vector2(1.1, 1.1), Vector2(1.1, 1.1), Vector2(0.9, 0.9)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Palette:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 10, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -180), Vector2(-14, -180), Vector2(-54, -180)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LeftBot/alert emote:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(3.1, 3.46667, 5.43333, 6.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LeftBot/alert emote:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(2.7),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-170, -152.727)]
+}
+
+[sub_resource type="Animation" id="Animation_7lrwo"]
+resource_name = "level4act3"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Palette:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10, 20, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-54, -180), Vector2(-29, -180), Vector2(-79, -180), Vector2(5, -180)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("RightBot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 10, 20, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 50), Vector2(25, 50), Vector2(-25, 50), Vector2(64, 50)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeftBot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 10, 20, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(55, 48), Vector2(80, 48), Vector2(30, 48), Vector2(119, 48)]
+}
+
+[sub_resource type="Animation" id="Animation_hi2tw"]
+resource_name = "level4act4"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Palette:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(5, -180), Vector2(5, -180), Vector2(-69, -180)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LeftBot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(119, 48), Vector2(119, 48), Vector2(36, 48)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RightBot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 2, 30),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(64, 50), Vector2(84, 50), Vector2(84, 50), Vector2(10, 50)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RightBot/RightBot:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(131, -100), Vector2(131, -100), Vector2(93.3333, -83.3333)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("RightBot/Coil:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(164, 36), Vector2(164, 36), Vector2(158.889, 41.1111)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("RightBot/Coil:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -0.261799]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RightBot/RightBot:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -0.261799]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("RightBot/confused emote:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(145.556, -152.222)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("RightBot/confused emote:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.1, 1.3, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_uk67k"]
+resource_name = "level4act5"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RightBot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 29, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(10, 50), Vector2(-20, 50), Vector2(-45, 50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LeftBot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 29, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(36, 48), Vector2(16, 48), Vector2(-31, 116)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Palette:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 29, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-69, -180), Vector2(-89, -180), Vector2(-120, -180)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LeftBot:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 29, 30),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(0.9, 0.9), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_22wmb"]
+resource_name = "level4act6"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RightBot:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-45, 50), Vector2(-890, 50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LeftBot:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5, 9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-31, 116), Vector2(-31, 116), Vector2(216, 354)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Palette:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-120, -180), Vector2(-960, -180)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LeftBot:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(5, 9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.1, 1.1), Vector2(1.2, 1.2)]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CoinsFallingOnCounter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("9_rrkii")
+}],
+"times": PackedFloat32Array(3)
+}
+tracks/4/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1yuoj"]
+_data = {
+&"RESET": SubResource("Animation_rrkii"),
+&"level4act1": SubResource("Animation_pvgif"),
+&"level4act2": SubResource("Animation_1yuoj"),
+&"level4act3": SubResource("Animation_7lrwo"),
+&"level4act4": SubResource("Animation_hi2tw"),
+&"level4act5": SubResource("Animation_uk67k"),
+&"level4act6": SubResource("Animation_22wmb")
+}
+
+[node name="BoxPaletteEvent" type="Node2D"]
+z_index = 3
+position = Vector2(620, 410)
+
+[node name="RightBot" type="Node2D" parent="."]
+z_index = 2
+position = Vector2(150, 50)
+scale = Vector2(0.9, 0.9)
+
+[node name="RightBot" type="TextureRect" parent="RightBot"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 131.0
+offset_top = -100.0
+offset_right = 215.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_pvgif")
+stretch_mode = 2
+
+[node name="Wheel" type="TextureRect" parent="RightBot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 164.0
+offset_top = 43.0
+offset_right = 195.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_rrkii")
+stretch_mode = 2
+
+[node name="Coil" type="TextureRect" parent="RightBot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 164.0
+offset_top = 36.0
+offset_right = 196.0
+offset_bottom = 99.9998
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.25)
+texture = ExtResource("3_1yuoj")
+stretch_mode = 2
+
+[node name="confused emote" type="TextureRect" parent="RightBot"]
+visible = false
+offset_left = 145.556
+offset_top = -152.222
+offset_right = 209.556
+offset_bottom = -88.2222
+texture = ExtResource("4_pvgif")
+
+[node name="LeftBot" type="Node2D" parent="."]
+z_index = 3
+position = Vector2(-113, 350)
+scale = Vector2(1.2, 1.2)
+
+[node name="LeftBot" type="TextureRect" parent="LeftBot"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -179.0
+offset_top = -100.0
+offset_right = -95.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("5_hi2tw")
+stretch_mode = 2
+
+[node name="Wheel" type="TextureRect" parent="LeftBot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = 43.0
+offset_right = -126.0
+offset_bottom = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_rrkii")
+stretch_mode = 2
+
+[node name="Coil" type="TextureRect" parent="LeftBot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -158.0
+offset_top = 36.0
+offset_right = -126.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.25)
+texture = ExtResource("3_1yuoj")
+stretch_mode = 2
+
+[node name="alert emote" type="TextureRect" parent="LeftBot"]
+visible = false
+offset_left = -170.0
+offset_top = -152.727
+offset_right = -106.0
+offset_bottom = -88.7273
+texture = ExtResource("6_uk67k")
+
+[node name="flip emote" type="TextureRect" parent="LeftBot"]
+visible = false
+offset_left = -169.0
+offset_top = -298.0
+offset_right = -105.0
+offset_bottom = -234.0
+texture = ExtResource("7_22wmb")
+
+[node name="Palette" type="TextureRect" parent="."]
+z_index = 2
+offset_left = 64.0
+offset_top = -180.0
+offset_right = 128.0
+offset_bottom = -104.0
+scale = Vector2(3, 4)
+texture = ExtResource("8_1qsaa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1yuoj")
+}
+
+[node name="CoinsFallingOnCounter" type="AudioStreamPlayer" parent="."]

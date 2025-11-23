@@ -1,0 +1,293 @@
+[gd_scene load_steps=15 format=3 uid="uid://t04rua8ugjdx"]
+
+[ext_resource type="Texture2D" uid="uid://bd4in4n8a0nxe" path="res://Assets/Car4.png" id="1_trt1m"]
+[ext_resource type="Texture2D" uid="uid://bfdetcn4oqjkl" path="res://Assets/Wheel.png" id="2_iabk0"]
+[ext_resource type="Texture2D" uid="uid://bk7r0b5nx53f0" path="res://Assets/Suit.png" id="3_ufaqs"]
+[ext_resource type="Texture2D" uid="uid://1ylngdj5t6a1" path="res://Assets/Heads/Head12.png" id="4_hrw6a"]
+[ext_resource type="Texture2D" uid="uid://cis1vkf4tt3vi" path="res://Assets/Heads/Head2.png" id="5_y5tuv"]
+[ext_resource type="Texture2D" uid="uid://cqa2y5u4nsg5t" path="res://Assets/Heads/Head13.png" id="6_l5gcw"]
+[ext_resource type="Texture2D" uid="uid://ca1poar65a0hw" path="res://Assets/Heads/Head16.png" id="7_fyob8"]
+[ext_resource type="Texture2D" uid="uid://b573ijdyqi82l" path="res://Assets/Heads/Head19.png" id="8_svni8"]
+[ext_resource type="Texture2D" uid="uid://e41it6o7pn2c" path="res://Assets/WAVRhand.png" id="9_7mvb3"]
+[ext_resource type="Texture2D" uid="uid://diditdcjl44ys" path="res://Assets/Heads/Head20.png" id="10_ped01"]
+[ext_resource type="Texture2D" uid="uid://cvl1sbr8lfdr6" path="res://Assets/Heads/Head26.png" id="11_aqtes"]
+[ext_resource type="Texture2D" uid="uid://s2ts1a8mw5ts" path="res://Assets/Heads/Head29.png" id="12_3gubh"]
+[ext_resource type="Texture2D" uid="uid://bpg28hrpnvwua" path="res://Assets/Heads/Head30.png" id="13_nq51m"]
+[ext_resource type="Texture2D" uid="uid://fq2j8ii4rufi" path="res://Assets/Heads/Head41.png" id="14_5ivo3"]
+
+[node name="ClownCar" type="Node2D"]
+position = Vector2(-380, 168)
+scale = Vector2(1.5, 2)
+
+[node name="Body" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_trt1m")
+
+[node name="BackWheel" type="TextureRect" parent="."]
+offset_left = 32.0
+offset_top = 96.0
+offset_right = 72.0
+offset_bottom = 136.0
+texture = ExtResource("2_iabk0")
+
+[node name="FrontWheel" type="TextureRect" parent="."]
+offset_left = 180.0
+offset_top = 96.0
+offset_right = 220.0
+offset_bottom = 136.0
+texture = ExtResource("2_iabk0")
+
+[node name="Passengers" type="Node2D" parent="."]
+z_index = -2
+
+[node name="P1" type="Node2D" parent="Passengers"]
+position = Vector2(200, 26.25)
+rotation = 0.523599
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P1"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P1"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("4_hrw6a")
+
+[node name="P2" type="Node2D" parent="Passengers"]
+position = Vector2(191.667, 18.75)
+rotation = 0.349066
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P2"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P2"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("5_y5tuv")
+
+[node name="P3" type="Node2D" parent="Passengers"]
+position = Vector2(180, 13.75)
+rotation = 0.174533
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P3"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P3"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("6_l5gcw")
+
+[node name="P4" type="Node2D" parent="Passengers"]
+position = Vector2(168.333, 8.75)
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P4"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P4"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("7_fyob8")
+
+[node name="P5" type="Node2D" parent="Passengers"]
+position = Vector2(158.333, 6.25)
+rotation = -0.174533
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P5"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P5"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("8_svni8")
+
+[node name="ColorRect3" type="ColorRect" parent="Passengers/P5"]
+z_index = 2
+offset_left = -37.368
+offset_top = 42.089
+offset_right = -27.368
+offset_bottom = 64.089
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Passengers/P5"]
+z_index = 2
+offset_left = -36.3682
+offset_top = 43.0893
+offset_right = -28.3682
+offset_bottom = 63.0893
+color = Color(0.12549, 0.145098, 0.411765, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Passengers/P5"]
+z_index = 2
+offset_left = -36.134
+offset_top = 65.885
+offset_right = -26.134
+offset_bottom = 87.885
+rotation = -1.74533
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Passengers/P5"]
+z_index = 2
+offset_left = -35.1342
+offset_top = 64.8848
+offset_right = -27.1342
+offset_bottom = 84.8848
+rotation = -1.74533
+color = Color(0.12549, 0.145098, 0.411765, 1)
+
+[node name="TextureRect3" type="TextureRect" parent="Passengers/P5"]
+z_index = 7
+offset_left = -15.899
+offset_top = 51.7758
+offset_right = 88.101
+offset_bottom = 121.776
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("9_7mvb3")
+
+[node name="P6" type="Node2D" parent="Passengers"]
+position = Vector2(146.667, 16.25)
+rotation = 0.349066
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P6"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P6"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("10_ped01")
+
+[node name="P7" type="Node2D" parent="Passengers"]
+position = Vector2(136.667, 10)
+rotation = 0.174533
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P7"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P7"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("11_aqtes")
+
+[node name="P8" type="Node2D" parent="Passengers"]
+position = Vector2(125, 7.5)
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P8"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P8"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("12_3gubh")
+
+[node name="P9" type="Node2D" parent="Passengers"]
+position = Vector2(111.667, 6.25)
+rotation = -0.174533
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P9"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P9"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("13_nq51m")
+
+[node name="P10" type="Node2D" parent="Passengers"]
+position = Vector2(95, 10)
+rotation = -0.523599
+
+[node name="TextureRect2" type="TextureRect" parent="Passengers/P10"]
+offset_left = -5.0
+offset_top = 37.5
+offset_right = 59.0
+offset_bottom = 165.5
+scale = Vector2(-0.5, 0.3)
+texture = ExtResource("3_ufaqs")
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Passengers/P10"]
+offset_left = -5.0
+offset_top = 12.5
+offset_right = 35.0
+offset_bottom = 52.5
+scale = Vector2(-0.7, 0.7)
+texture = ExtResource("14_5ivo3")

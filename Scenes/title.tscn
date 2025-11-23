@@ -1,0 +1,147 @@
+[gd_scene load_steps=8 format=3 uid="uid://ikrgtng78siv"]
+
+[ext_resource type="Texture2D" uid="uid://dqqnkcas0hoox" path="res://Assets/TitleW.png" id="1_q2qps"]
+[ext_resource type="Texture2D" uid="uid://cljcn7l0cemhk" path="res://Assets/TitleA.png" id="2_yosvi"]
+[ext_resource type="Texture2D" uid="uid://bq08jew72pjr0" path="res://Assets/TitleV.png" id="3_2qdx2"]
+[ext_resource type="Texture2D" uid="uid://c66k8gr1e3gaw" path="res://Assets/TitleR.png" id="4_3eqdi"]
+
+[sub_resource type="Animation" id="Animation_6aagf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("W:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("A:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(64, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("V:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(128, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("R:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(192, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yu0ss"]
+resource_name = "TitleDrop"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("W:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3.8, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 192), Vector2(0, 192), Vector2(18, 193.333)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("A:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.166667, 1.13333, 1.7, 3.8, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(64, 0), Vector2(64, 0), Vector2(64, 192), Vector2(64, 214), Vector2(64, 214), Vector2(64, 214)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("V:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.26667, 1.7, 2.36667, 3.8, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(128, 0), Vector2(128, 0), Vector2(128, 192), Vector2(128, 236), Vector2(128, 164), Vector2(128, 164), Vector2(115.333, 191.333)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("R:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.433333, 1.4, 1.7, 2.36667, 2.93333, 3.13333, 3.33333, 3.56667, 3.8, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(192, 0), Vector2(192, 0), Vector2(192, 192), Vector2(192, 256), Vector2(192, 108), Vector2(128, 108), Vector2(189.333, 122), Vector2(192, 164), Vector2(190.667, 122.667), Vector2(192, 108), Vector2(164.667, 158.667)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kyk5u"]
+_data = {
+&"RESET": SubResource("Animation_6aagf"),
+&"TitleDrop": SubResource("Animation_yu0ss")
+}
+
+[node name="Title" type="Node2D"]
+position = Vector2(74, -182)
+scale = Vector2(1.5, 1.5)
+
+[node name="W" type="TextureRect" parent="."]
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_q2qps")
+
+[node name="A" type="TextureRect" parent="."]
+offset_left = 64.0
+offset_right = 128.0
+offset_bottom = 64.0
+texture = ExtResource("2_yosvi")
+
+[node name="V" type="TextureRect" parent="."]
+offset_left = 128.0
+offset_right = 192.0
+offset_bottom = 64.0
+texture = ExtResource("3_2qdx2")
+
+[node name="R" type="TextureRect" parent="."]
+offset_left = 192.0
+offset_right = 256.0
+offset_bottom = 64.0
+texture = ExtResource("4_3eqdi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_kyk5u")
+}

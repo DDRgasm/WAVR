@@ -1,0 +1,134 @@
+[gd_scene load_steps=4 format=3 uid="uid://cujg1ims6ns7f"]
+
+[ext_resource type="Script" uid="uid://c3sbuvflaabfu" path="res://Scripts/Player.gd" id="1_emsey"]
+
+[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_xhfnw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
+size = Vector2(29, 29.9999)
+
+[node name="WAVR" type="Node2D"]
+script = ExtResource("1_emsey")
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+position = Vector2(-43, 165)
+modification_stack = SubResource("SkeletonModificationStack2D_xhfnw")
+
+[node name="Arm" type="Bone2D" parent="Skeleton2D"]
+z_index = 10
+position = Vector2(263, 251)
+rotation = 1.5708
+
+[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Arm"]
+offset_top = -36.0
+offset_right = 216.0
+offset_bottom = 35.0
+
+[node name="Forearm" type="Bone2D" parent="Skeleton2D/Arm"]
+position = Vector2(191, -1.00069)
+
+[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Arm/Forearm"]
+z_index = -1
+offset_top = -30.0
+offset_right = 192.0
+offset_bottom = 30.0
+color = Color(1, 1, 0.32549, 1)
+
+[node name="Hand" type="Bone2D" parent="Skeleton2D/Arm/Forearm"]
+position = Vector2(174, 1.99937)
+
+[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+offset_left = -2.0
+offset_top = -32.0
+offset_right = 82.0
+offset_bottom = 28.0
+color = Color(1, 1, 0.32549, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+offset_left = 34.9999
+offset_top = -31.0001
+offset_right = 74.9999
+offset_bottom = -13.0001
+rotation = -0.785398
+color = Color(1, 1, 0.32549, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+offset_left = 66.9999
+offset_top = -31.0002
+offset_right = 111.0
+offset_bottom = -19.0002
+rotation = -0.174533
+color = Color(1, 1, 0.32549, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+offset_left = 77.0
+offset_top = -16.0003
+offset_right = 119.0
+offset_bottom = -4.00028
+rotation = -0.0872665
+color = Color(1, 1, 0.32549, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+offset_left = 81.0
+offset_top = 0.999707
+offset_right = 117.0
+offset_bottom = 12.9997
+color = Color(1, 1, 0.32549, 1)
+
+[node name="ColorRect6" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+offset_left = 76.0
+offset_top = 16.0
+offset_right = 109.0
+offset_bottom = 26.0
+rotation = 0.174533
+color = Color(1, 1, 0.32549, 1)
+
+[node name="Area2D" type="Area2D" parent="Skeleton2D/Arm/Forearm/Hand"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Arm/Forearm/Hand/Area2D"]
+position = Vector2(47.4999, -2.0002)
+shape = SubResource("RectangleShape2D_kpjcp")
+
+[node name="Critical Hitbox" type="Area2D" parent="Skeleton2D/Arm/Forearm/Hand"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Arm/Forearm/Hand/Critical Hitbox"]
+position = Vector2(48.0001, -2.00021)
+scale = Vector2(0.3, 0.3)
+shape = SubResource("RectangleShape2D_kpjcp")
+
+[node name="Body" type="Bone2D" parent="Skeleton2D"]
+z_index = 9
+position = Vector2(42, 81)
+
+[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Body"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 2.0
+offset_right = 256.0
+offset_bottom = 252.0
+grow_horizontal = 2
+color = Color(1, 1, 0.360784, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Skeleton2D/Body"]
+z_index = -1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 252.0
+offset_right = 256.0
+offset_bottom = 402.0
+grow_horizontal = 2
+color = Color(0.578581, 0.41947, 0.0913493, 1)
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(684, 130)
+
+[node name="Node2D2" type="Node2D" parent="."]
+position = Vector2(684, 260)
+
+[node name="Node2D3" type="Node2D" parent="."]
+position = Vector2(684, 390)
+
+[node name="Node2D4" type="Node2D" parent="."]
+position = Vector2(684, 520)

@@ -1,0 +1,815 @@
+[gd_scene load_steps=20 format=3 uid="uid://dvq7lryf0brtk"]
+
+[ext_resource type="Script" uid="uid://c3sbuvflaabfu" path="res://Scripts/Player.gd" id="1_8xmqo"]
+[ext_resource type="Texture2D" uid="uid://brs05knrl8e8d" path="res://Assets/WAVRarm.png" id="2_5ixxa"]
+[ext_resource type="Texture2D" uid="uid://r4b475ky256v" path="res://Assets/Locked.png" id="2_52ee3"]
+[ext_resource type="Texture2D" uid="uid://kc5lt3wobvsh" path="res://Assets/WAVR.png" id="2_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://ck6uao4ofa4w6" path="res://Assets/WAVRforearm.png" id="3_nn08x"]
+[ext_resource type="Texture2D" uid="uid://e41it6o7pn2c" path="res://Assets/WAVRhand.png" id="4_52ee3"]
+[ext_resource type="Texture2D" uid="uid://bnroepls41s18" path="res://Assets/TileOutline.png" id="6_bhhdu"]
+[ext_resource type="Texture2D" uid="uid://qnn0a8k36s2e" path="res://Assets/WAVRhead.png" id="6_nn08x"]
+[ext_resource type="Texture2D" uid="uid://b6nvr0jfir62m" path="res://Assets/TileOutlineOn.png" id="9_megsn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bigtarget"]
+size = Vector2(300, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_centertarget"]
+size = Vector2(148.571, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_52ee3"]
+size = Vector2(150, 100.714)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhhdu"]
+size = Vector2(149, 86)
+
+[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_xhfnw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
+size = Vector2(29, 29.9999)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yoq75"]
+size = Vector2(122, 29)
+
+[sub_resource type="Animation" id="Animation_megsn"]
+resource_name = "CreditScroll"
+length = 30.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Credits/Credits Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 28.0333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(585, 39), Vector2(585, -2250)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Credits:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(25, 30),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yoq75"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Credits/Credits Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(585, 39)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Credits:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ksbbd"]
+_data = {
+&"CreditScroll": SubResource("Animation_megsn"),
+&"RESET": SubResource("Animation_yoq75")
+}
+
+[node name="WAVR" type="Node2D"]
+script = ExtResource("1_8xmqo")
+
+[node name="Target Zone" type="Node2D" parent="."]
+z_index = 9
+position = Vector2(447, 323)
+scale = Vector2(0.7, 0.7)
+
+[node name="Big Target" type="Area2D" parent="Target Zone"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target Zone/Big Target"]
+shape = SubResource("RectangleShape2D_bigtarget")
+
+[node name="Center Target" type="Area2D" parent="Target Zone"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target Zone/Center Target"]
+shape = SubResource("RectangleShape2D_centertarget")
+
+[node name="TopLeft Target" type="Area2D" parent="Target Zone"]
+position = Vector2(-75, -50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target Zone/TopLeft Target"]
+shape = SubResource("RectangleShape2D_52ee3")
+
+[node name="TopRight Target" type="Area2D" parent="Target Zone"]
+position = Vector2(75, -50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target Zone/TopRight Target"]
+shape = SubResource("RectangleShape2D_52ee3")
+
+[node name="BottomLeft Target" type="Area2D" parent="Target Zone"]
+position = Vector2(-75, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target Zone/BottomLeft Target"]
+shape = SubResource("RectangleShape2D_52ee3")
+
+[node name="BottomRight Target" type="Area2D" parent="Target Zone"]
+position = Vector2(75, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Target Zone/BottomRight Target"]
+shape = SubResource("RectangleShape2D_52ee3")
+
+[node name="Target" type="ColorRect" parent="Target Zone"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.752941, 0.72549, 0.258824, 0.164706)
+
+[node name="Hold Timer" type="ColorRect" parent="Target Zone"]
+offset_left = -150.0
+offset_top = -127.0
+offset_right = 150.0
+offset_bottom = -103.0
+color = Color(0.596078, 0.596078, 0.596078, 0.596078)
+
+[node name="Feedback" type="Node2D" parent="Target Zone"]
+
+[node name="FailX" type="Label" parent="Target Zone/Feedback"]
+visible = false
+z_index = 5
+offset_left = -100.0
+offset_top = -75.0
+offset_right = 100.0
+offset_bottom = 75.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 120
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SuccessPlus" type="Label" parent="Target Zone/Feedback"]
+visible = false
+z_index = 5
+offset_left = -100.0
+offset_top = -75.0
+offset_right = 100.0
+offset_bottom = 75.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AngryMinus" type="Label" parent="Target Zone/Feedback"]
+visible = false
+z_index = 5
+offset_left = -100.0
+offset_top = -75.0
+offset_right = 100.0
+offset_bottom = 75.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "-1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TopLeftQuadrantHUD" type="Node2D" parent="Target Zone/Feedback"]
+visible = false
+position = Vector2(-150, -100)
+
+[node name="TextureRect" type="TextureRect" parent="Target Zone/Feedback/TopLeftQuadrantHUD"]
+modulate = Color(1, 1, 1, 0.517647)
+offset_right = 150.0
+offset_bottom = 100.0
+texture = ExtResource("2_52ee3")
+
+[node name="ColorRect" type="ColorRect" parent="Target Zone/Feedback/TopLeftQuadrantHUD"]
+modulate = Color(1, 0, 0, 0.25098)
+offset_right = 150.0
+offset_bottom = 100.0
+
+[node name="TopRightQuadrantHUD4" type="Node2D" parent="Target Zone/Feedback"]
+visible = false
+position = Vector2(0, -100)
+
+[node name="TextureRect" type="TextureRect" parent="Target Zone/Feedback/TopRightQuadrantHUD4"]
+modulate = Color(1, 1, 1, 0.517647)
+offset_right = 150.0
+offset_bottom = 100.0
+texture = ExtResource("2_52ee3")
+
+[node name="ColorRect" type="ColorRect" parent="Target Zone/Feedback/TopRightQuadrantHUD4"]
+modulate = Color(1, 0, 0, 0.25098)
+offset_right = 150.0
+offset_bottom = 100.0
+
+[node name="BottomLeftQuadrantHUD3" type="Node2D" parent="Target Zone/Feedback"]
+visible = false
+position = Vector2(-150, 0)
+
+[node name="TextureRect" type="TextureRect" parent="Target Zone/Feedback/BottomLeftQuadrantHUD3"]
+modulate = Color(1, 1, 1, 0.517647)
+offset_right = 150.0
+offset_bottom = 100.0
+texture = ExtResource("2_52ee3")
+
+[node name="ColorRect" type="ColorRect" parent="Target Zone/Feedback/BottomLeftQuadrantHUD3"]
+modulate = Color(1, 0, 0, 0.25098)
+offset_right = 150.0
+offset_bottom = 100.0
+
+[node name="BottomRightQuadrantHUD2" type="Node2D" parent="Target Zone/Feedback"]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="Target Zone/Feedback/BottomRightQuadrantHUD2"]
+modulate = Color(1, 1, 1, 0.517647)
+offset_right = 150.0
+offset_bottom = 100.0
+texture = ExtResource("2_52ee3")
+
+[node name="ColorRect" type="ColorRect" parent="Target Zone/Feedback/BottomRightQuadrantHUD2"]
+modulate = Color(1, 0, 0, 0.25098)
+offset_right = 150.0
+offset_bottom = 100.0
+
+[node name="Timer Pips" type="Node2D" parent="Target Zone"]
+
+[node name="Pip" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = -148.0
+offset_top = -126.0
+offset_right = -123.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip2" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = -118.0
+offset_top = -126.0
+offset_right = -93.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip3" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = -88.0
+offset_top = -126.0
+offset_right = -63.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip4" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = -58.0
+offset_top = -126.0
+offset_right = -33.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip5" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = -28.0
+offset_top = -126.0
+offset_right = -3.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip6" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = 2.0
+offset_top = -126.0
+offset_right = 27.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip7" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = 32.0
+offset_top = -126.0
+offset_right = 57.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip8" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = 62.0
+offset_top = -126.0
+offset_right = 87.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip9" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = 92.0
+offset_top = -126.0
+offset_right = 117.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip10" type="ColorRect" parent="Target Zone/Timer Pips"]
+offset_left = 122.0
+offset_top = -126.0
+offset_right = 147.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip11" type="ColorRect" parent="Target Zone/Timer Pips"]
+visible = false
+offset_left = 152.0
+offset_top = -126.0
+offset_right = 177.0
+offset_bottom = -104.0
+color = Color(0, 0.643698, 0, 0.501961)
+
+[node name="Pip12" type="ColorRect" parent="Target Zone/Timer Pips"]
+visible = false
+offset_left = 182.0
+offset_top = -126.0
+offset_right = 207.0
+offset_bottom = -104.0
+color = Color(0, 0.643137, 0, 0.501961)
+
+[node name="Secondary Target Zone" type="Node2D" parent="."]
+visible = false
+position = Vector2(73, 284)
+
+[node name="Target" type="ColorRect" parent="Secondary Target Zone"]
+z_index = 70
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.336984, 0.790417, 0.758384, 0.164706)
+
+[node name="Hold Timer" type="ColorRect" parent="Secondary Target Zone"]
+z_index = 70
+offset_right = 150.0
+offset_bottom = 12.0
+color = Color(0.596078, 0.596078, 0.596078, 0.596078)
+
+[node name="Timer Pips" type="Node2D" parent="Secondary Target Zone"]
+z_index = 70
+position = Vector2(75, 63)
+scale = Vector2(0.5, 0.5)
+
+[node name="Pip" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = -148.0
+offset_top = -126.0
+offset_right = -123.0
+offset_bottom = -104.0
+color = Color(0.111115, 0.627154, 0.910096, 0.501961)
+
+[node name="Pip2" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = -118.0
+offset_top = -126.0
+offset_right = -93.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip3" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = -88.0
+offset_top = -126.0
+offset_right = -63.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip4" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = -58.0
+offset_top = -126.0
+offset_right = -33.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip5" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = -28.0
+offset_top = -126.0
+offset_right = -3.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip6" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = 2.0
+offset_top = -126.0
+offset_right = 27.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip7" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = 32.0
+offset_top = -126.0
+offset_right = 57.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip8" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = 62.0
+offset_top = -126.0
+offset_right = 87.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip9" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = 92.0
+offset_top = -126.0
+offset_right = 117.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Pip10" type="ColorRect" parent="Secondary Target Zone/Timer Pips"]
+offset_left = 122.0
+offset_top = -126.0
+offset_right = 147.0
+offset_bottom = -104.0
+color = Color(0.109804, 0.627451, 0.909804, 0.501961)
+
+[node name="Area2D" type="Area2D" parent="Secondary Target Zone"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Secondary Target Zone/Area2D"]
+position = Vector2(75.5, 56)
+shape = SubResource("RectangleShape2D_bhhdu")
+
+[node name="Instructions" type="Label" parent="Secondary Target Zone"]
+z_index = 80
+offset_left = 269.0
+offset_top = -30.0
+offset_right = 479.0
+offset_bottom = 109.0
+theme_override_font_sizes/font_size = 32
+text = "WIPE AWAY THOSE TEARS"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+position = Vector2(-43, 165)
+modification_stack = SubResource("SkeletonModificationStack2D_xhfnw")
+
+[node name="Arm" type="Bone2D" parent="Skeleton2D"]
+position = Vector2(263, 279)
+rotation = 1.5708
+
+[node name="TextureRect" type="TextureRect" parent="Skeleton2D/Arm"]
+z_index = 62
+offset_left = -23.0001
+offset_top = -36.9999
+offset_right = 193.0
+offset_bottom = 34.0001
+texture = ExtResource("2_5ixxa")
+
+[node name="Forearm" type="Bone2D" parent="Skeleton2D/Arm"]
+position = Vector2(191, -1.00069)
+
+[node name="TextureRect2" type="TextureRect" parent="Skeleton2D/Arm/Forearm"]
+z_index = 61
+offset_left = -25.0001
+offset_top = -30.9999
+offset_right = 167.0
+offset_bottom = 29.0001
+texture = ExtResource("3_nn08x")
+
+[node name="Hand" type="Bone2D" parent="Skeleton2D/Arm/Forearm"]
+position = Vector2(159, -3.00058)
+
+[node name="TextureRect3" type="TextureRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+z_index = 59
+offset_left = -18.0002
+offset_top = -37.9999
+offset_right = 85.9998
+offset_bottom = 32.0001
+texture = ExtResource("4_52ee3")
+
+[node name="Area2D" type="Area2D" parent="Skeleton2D/Arm/Forearm/Hand"]
+position = Vector2(-33, 2.00012)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Arm/Forearm/Hand/Area2D"]
+position = Vector2(47.4999, -2.0002)
+shape = SubResource("RectangleShape2D_kpjcp")
+
+[node name="Critical Hitbox" type="Area2D" parent="Skeleton2D/Arm/Forearm/Hand"]
+position = Vector2(-34, 2.00012)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Arm/Forearm/Hand/Critical Hitbox"]
+position = Vector2(48.0001, -2.00021)
+scale = Vector2(0.3, 0.3)
+shape = SubResource("RectangleShape2D_kpjcp")
+
+[node name="HitboxIndicator" type="TextureRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+z_index = 61
+offset_left = -5.00007
+offset_top = -19.0
+offset_right = 123.0
+offset_bottom = 109.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("6_bhhdu")
+
+[node name="Body" type="Bone2D" parent="Skeleton2D"]
+position = Vector2(46, 84)
+
+[node name="TextureRect" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 60
+offset_top = 160.0
+offset_right = 256.0
+offset_bottom = 400.0
+texture = ExtResource("2_kyqiw")
+
+[node name="TextureRect2" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 58
+offset_left = 81.0
+offset_top = 176.0
+offset_right = 297.0
+offset_bottom = 247.0
+rotation = 1.5708
+texture = ExtResource("2_5ixxa")
+
+[node name="TextureRect3" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 57
+offset_left = 73.0
+offset_top = 364.0
+offset_right = 265.0
+offset_bottom = 424.0
+rotation = 1.5708
+texture = ExtResource("3_nn08x")
+
+[node name="TextureRect4" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 65
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("6_nn08x")
+
+[node name="Level Result" type="Node2D" parent="."]
+visible = false
+z_index = 99
+
+[node name="ColorRect" type="ColorRect" parent="Level Result"]
+z_index = 15
+offset_left = 251.0
+offset_top = 156.0
+offset_right = 803.0
+offset_bottom = 483.0
+color = Color(0.568627, 0.568627, 0.568627, 0.215686)
+
+[node name="Label" type="Label" parent="Level Result"]
+z_index = 16
+offset_left = 261.0
+offset_top = 235.0
+offset_right = 799.0
+offset_bottom = 440.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 96
+text = "RESULT"
+horizontal_alignment = 1
+
+[node name="Debug Text" type="Label" parent="."]
+visible = false
+z_index = 99
+offset_left = 704.0
+offset_top = 522.0
+offset_right = 1138.0
+offset_bottom = 633.0
+theme_override_font_sizes/font_size = 32
+text = "NPC Type
+Wait time remaining"
+
+[node name="Stats" type="HBoxContainer" parent="."]
+z_index = 12
+offset_left = 575.0
+offset_top = 6.0
+offset_right = 960.0
+offset_bottom = 46.0
+scale = Vector2(1.5, 1.5)
+size_flags_horizontal = 3
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="Timer" type="HBoxContainer" parent="Stats"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Time Remaining" type="Label" parent="Stats/Timer"]
+z_index = 12
+layout_mode = 2
+text = "Time Remaining: "
+
+[node name="Timer" type="Label" parent="Stats/Timer"]
+z_index = 12
+layout_mode = 2
+text = "3:00"
+
+[node name="Clear Condition" type="HBoxContainer" parent="Stats"]
+layout_mode = 2
+
+[node name="Timer2" type="Label" parent="Stats/Clear Condition"]
+z_index = 12
+layout_mode = 2
+text = "Wave Backs"
+
+[node name="Wave Backs" type="Label" parent="Stats/Clear Condition"]
+z_index = 12
+layout_mode = 2
+text = "0"
+
+[node name="Clear Condition" type="Label" parent="Stats/Clear Condition"]
+z_index = 12
+layout_mode = 2
+text = "/5"
+
+[node name="Stats Background" type="ColorRect" parent="."]
+offset_left = 574.0
+offset_top = 16.0
+offset_right = 1152.0
+offset_bottom = 56.0
+color = Color(0.137255, 0.137255, 0.137255, 0.670588)
+
+[node name="Hider" type="Node2D" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Hider"]
+z_index = 50
+custom_minimum_size = Vector2(1152, 648)
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Loading Screen" type="Node2D" parent="Hider"]
+z_index = 51
+
+[node name="Credits" type="Node2D" parent="Hider"]
+
+[node name="SkipButton" type="Control" parent="Hider/Credits"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 731.0
+offset_top = 576.0
+offset_right = 771.0
+offset_bottom = 616.0
+scale = Vector2(2, 2)
+
+[node name="TextureRect" type="TextureRect" parent="Hider/Credits/SkipButton"]
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+scale = Vector2(1, 0.25)
+texture = ExtResource("9_megsn")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Hider/Credits/SkipButton"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 2.0
+offset_right = 119.0
+offset_bottom = 30.0
+theme_override_font_sizes/font_size = 20
+text = "SKIP"
+horizontal_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="Hider/Credits/SkipButton"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hider/Credits/SkipButton/Area2D"]
+position = Vector2(64, 15.5)
+shape = SubResource("RectangleShape2D_yoq75")
+
+[node name="CreditsOutline" type="TextureRect" parent="Hider/Credits"]
+z_index = 53
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 547.0
+offset_top = 3.0
+offset_right = 771.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2.7, 2.9)
+texture = ExtResource("6_bhhdu")
+
+[node name="Credits Text" type="Label" parent="Hider/Credits"]
+z_index = 51
+offset_left = 585.0
+offset_top = 39.0
+offset_right = 1115.0
+offset_bottom = 2959.0
+theme_override_font_sizes/font_size = 24
+text = "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+THE END
+
+
+
+
+
+
+
+
+
+Credits:
+
+Created By:
+Elias Cummins
+
+
+
+AI Copilot:
+Claude Sonnet 4.5
+
+
+
+Special Thanks:
+
+Audio Assets: 
+Tim Reichert
+https://tim-reichert.com
+
+
+NPC Head Assets:
+BeeMaxStudio
+https://beemaxstudio.itch.io/freeheadz
+
+
+Grocery Store Assets:
+gurokitty
+https://gurokitty.itch.io/grocery-store-assets
+
+
+
+
+
+
+
+
+
+
+THANKS FOR PLAYING!
+
+
+
+
+
+
+
+
+
+"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Hider/Credits"]
+z_index = 52
+custom_minimum_size = Vector2(1152, 100)
+offset_left = 537.0
+offset_top = -162.0
+offset_right = 1689.0
+offset_bottom = 38.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Hider/Credits"]
+z_index = 52
+custom_minimum_size = Vector2(1152, 100)
+offset_left = 537.0
+offset_top = 548.0
+offset_right = 1689.0
+offset_bottom = 748.0
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hider"]
+libraries = {
+&"": SubResource("AnimationLibrary_ksbbd")
+}
