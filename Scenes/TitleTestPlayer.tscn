@@ -1,134 +1,162 @@
-[gd_scene load_steps=4 format=3 uid="uid://cujg1ims6ns7f"]
+[gd_scene load_steps=10 format=3 uid="uid://cujg1ims6ns7f"]
 
 [ext_resource type="Script" uid="uid://c3sbuvflaabfu" path="res://Scripts/Player.gd" id="1_emsey"]
+[ext_resource type="Texture2D" uid="uid://brs05knrl8e8d" path="res://Assets/WAVRarm.png" id="2_oup4p"]
+[ext_resource type="Texture2D" uid="uid://ck6uao4ofa4w6" path="res://Assets/WAVRforearm.png" id="3_55oap"]
+[ext_resource type="Texture2D" uid="uid://e41it6o7pn2c" path="res://Assets/WAVRhand.png" id="4_4vtqc"]
+[ext_resource type="Texture2D" uid="uid://bnroepls41s18" path="res://Assets/TileOutline.png" id="5_r47j5"]
+[ext_resource type="Texture2D" uid="uid://kc5lt3wobvsh" path="res://Assets/WAVR.png" id="6_pf2c2"]
+[ext_resource type="Texture2D" uid="uid://qnn0a8k36s2e" path="res://Assets/WAVRhead.png" id="7_pdcnh"]
 
-[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_xhfnw"]
+[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_uavrm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kpjcp"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7k88r"]
 size = Vector2(29, 29.9999)
 
 [node name="WAVR" type="Node2D"]
 script = ExtResource("1_emsey")
 
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(708, 241)
+
+[node name="Node2D2" type="Node2D" parent="."]
+position = Vector2(705, 309)
+
+[node name="Node2D3" type="Node2D" parent="."]
+position = Vector2(702, 390)
+
+[node name="Node2D4" type="Node2D" parent="."]
+position = Vector2(700, 463)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 702.0
+offset_top = 218.0
+offset_right = 936.0
+offset_bottom = 446.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+theme_override_constants/separation = 20
+
+[node name="StartButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Start"
+
+[node name="LevelSelectButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Level Select"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit"
+
 [node name="Skeleton2D" type="Skeleton2D" parent="."]
 position = Vector2(-43, 165)
-modification_stack = SubResource("SkeletonModificationStack2D_xhfnw")
+modification_stack = SubResource("SkeletonModificationStack2D_uavrm")
 
 [node name="Arm" type="Bone2D" parent="Skeleton2D"]
-z_index = 10
-position = Vector2(263, 251)
-rotation = 1.5708
+position = Vector2(263, 279)
+rotation = 0.349066
 
-[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Arm"]
-offset_top = -36.0
-offset_right = 216.0
-offset_bottom = 35.0
+[node name="TextureRect" type="TextureRect" parent="Skeleton2D/Arm"]
+z_index = 62
+offset_left = -23.0001
+offset_top = -36.9999
+offset_right = 193.0
+offset_bottom = 34.0001
+texture = ExtResource("2_oup4p")
 
 [node name="Forearm" type="Bone2D" parent="Skeleton2D/Arm"]
 position = Vector2(191, -1.00069)
+rotation = -0.436332
 
-[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Arm/Forearm"]
-z_index = -1
-offset_top = -30.0
-offset_right = 192.0
-offset_bottom = 30.0
-color = Color(1, 1, 0.32549, 1)
+[node name="TextureRect2" type="TextureRect" parent="Skeleton2D/Arm/Forearm"]
+z_index = 61
+offset_left = -25.0001
+offset_top = -30.9999
+offset_right = 167.0
+offset_bottom = 29.0001
+texture = ExtResource("3_55oap")
 
 [node name="Hand" type="Bone2D" parent="Skeleton2D/Arm/Forearm"]
-position = Vector2(174, 1.99937)
-
-[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
-offset_left = -2.0
-offset_top = -32.0
-offset_right = 82.0
-offset_bottom = 28.0
-color = Color(1, 1, 0.32549, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
-offset_left = 34.9999
-offset_top = -31.0001
-offset_right = 74.9999
-offset_bottom = -13.0001
-rotation = -0.785398
-color = Color(1, 1, 0.32549, 1)
-
-[node name="ColorRect3" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
-offset_left = 66.9999
-offset_top = -31.0002
-offset_right = 111.0
-offset_bottom = -19.0002
-rotation = -0.174533
-color = Color(1, 1, 0.32549, 1)
-
-[node name="ColorRect4" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
-offset_left = 77.0
-offset_top = -16.0003
-offset_right = 119.0
-offset_bottom = -4.00028
+position = Vector2(159, -3.00058)
 rotation = -0.0872665
-color = Color(1, 1, 0.32549, 1)
 
-[node name="ColorRect5" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
-offset_left = 81.0
-offset_top = 0.999707
-offset_right = 117.0
-offset_bottom = 12.9997
-color = Color(1, 1, 0.32549, 1)
-
-[node name="ColorRect6" type="ColorRect" parent="Skeleton2D/Arm/Forearm/Hand"]
-offset_left = 76.0
-offset_top = 16.0
-offset_right = 109.0
-offset_bottom = 26.0
-rotation = 0.174533
-color = Color(1, 1, 0.32549, 1)
+[node name="TextureRect3" type="TextureRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+z_index = 59
+offset_left = -18.0002
+offset_top = -37.9999
+offset_right = 85.9998
+offset_bottom = 32.0001
+texture = ExtResource("4_4vtqc")
 
 [node name="Area2D" type="Area2D" parent="Skeleton2D/Arm/Forearm/Hand"]
+position = Vector2(-33, 2.00012)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Arm/Forearm/Hand/Area2D"]
 position = Vector2(47.4999, -2.0002)
-shape = SubResource("RectangleShape2D_kpjcp")
+shape = SubResource("RectangleShape2D_7k88r")
 
 [node name="Critical Hitbox" type="Area2D" parent="Skeleton2D/Arm/Forearm/Hand"]
+position = Vector2(-34, 2.00012)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Arm/Forearm/Hand/Critical Hitbox"]
 position = Vector2(48.0001, -2.00021)
 scale = Vector2(0.3, 0.3)
-shape = SubResource("RectangleShape2D_kpjcp")
+shape = SubResource("RectangleShape2D_7k88r")
+
+[node name="HitboxIndicator" type="TextureRect" parent="Skeleton2D/Arm/Forearm/Hand"]
+z_index = 61
+offset_left = -5.00007
+offset_top = -19.0
+offset_right = 123.0
+offset_bottom = 109.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_r47j5")
 
 [node name="Body" type="Bone2D" parent="Skeleton2D"]
-z_index = 9
-position = Vector2(42, 81)
+position = Vector2(46, 84)
 
-[node name="ColorRect" type="ColorRect" parent="Skeleton2D/Body"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_top = 2.0
+[node name="TextureRect" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 60
+offset_top = 160.0
 offset_right = 256.0
-offset_bottom = 252.0
-grow_horizontal = 2
-color = Color(1, 1, 0.360784, 1)
+offset_bottom = 400.0
+texture = ExtResource("6_pf2c2")
 
-[node name="ColorRect2" type="ColorRect" parent="Skeleton2D/Body"]
-z_index = -1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_top = 252.0
-offset_right = 256.0
-offset_bottom = 402.0
-grow_horizontal = 2
-color = Color(0.578581, 0.41947, 0.0913493, 1)
+[node name="TextureRect2" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 58
+offset_left = 81.0
+offset_top = 176.0
+offset_right = 297.0
+offset_bottom = 247.0
+rotation = 1.5708
+texture = ExtResource("2_oup4p")
 
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(684, 130)
+[node name="TextureRect3" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 57
+offset_left = 73.0
+offset_top = 364.0
+offset_right = 265.0
+offset_bottom = 424.0
+rotation = 1.5708
+texture = ExtResource("3_55oap")
 
-[node name="Node2D2" type="Node2D" parent="."]
-position = Vector2(684, 260)
-
-[node name="Node2D3" type="Node2D" parent="."]
-position = Vector2(684, 390)
-
-[node name="Node2D4" type="Node2D" parent="."]
-position = Vector2(684, 520)
+[node name="TextureRect4" type="TextureRect" parent="Skeleton2D/Body"]
+z_index = 65
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_pdcnh")

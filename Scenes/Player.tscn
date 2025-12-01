@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dvq7lryf0brtk"]
+[gd_scene load_steps=26 format=3 uid="uid://dvq7lryf0brtk"]
 
 [ext_resource type="Script" uid="uid://c3sbuvflaabfu" path="res://Scripts/Player.gd" id="1_8xmqo"]
 [ext_resource type="Texture2D" uid="uid://brs05knrl8e8d" path="res://Assets/WAVRarm.png" id="2_5ixxa"]
@@ -9,6 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://bnroepls41s18" path="res://Assets/TileOutline.png" id="6_bhhdu"]
 [ext_resource type="Texture2D" uid="uid://qnn0a8k36s2e" path="res://Assets/WAVRhead.png" id="6_nn08x"]
 [ext_resource type="Texture2D" uid="uid://b6nvr0jfir62m" path="res://Assets/TileOutlineOn.png" id="9_megsn"]
+[ext_resource type="Texture2D" uid="uid://gheyb47tdmn2" path="res://Assets/UI assets/NextButton.png" id="9_miouo"]
+[ext_resource type="Texture2D" uid="uid://c81ffiqc7skfq" path="res://Assets/UI assets/SkipButton.png" id="10_o3h8g"]
+[ext_resource type="PackedScene" uid="uid://bayifw8dixpg" path="res://Scenes/InputCallouts.tscn" id="10_yoq75"]
+[ext_resource type="Texture2D" uid="uid://b4gn6dairvat6" path="res://Assets/UI assets/BlankKey.png" id="11_ksbbd"]
+[ext_resource type="Texture2D" uid="uid://cj0wopubqg6ot" path="res://Assets/RightBot.png" id="11_o3h8g"]
+[ext_resource type="Texture2D" uid="uid://o7rnl0b6gldl" path="res://Assets/NPC Emote.png" id="12_1e7my"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bigtarget"]
 size = Vector2(300, 200)
@@ -648,10 +654,332 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 1)
 
-[node name="Loading Screen" type="Node2D" parent="Hider"]
+[node name="PauseMenu" type="Node2D" parent="Hider"]
+visible = false
+
+[node name="PauseOutline" type="TextureRect" parent="Hider/PauseMenu"]
+z_index = 53
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 606.0
+offset_top = 3.0
+offset_right = 780.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2.7, 2.9)
+texture = ExtResource("6_bhhdu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Hider/PauseMenu"]
+offset_left = 630.0
+offset_top = 67.0
+offset_right = 1068.0
+offset_bottom = 527.0
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Label" type="Label" parent="Hider/PauseMenu/VBoxContainer"]
+z_index = 54
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "PAUSE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="Hider/PauseMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Hider/PauseMenu/VBoxContainer"]
+z_index = 54
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "INPUT SCHEME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputSchemeContainer" type="HBoxContainer" parent="Hider/PauseMenu/VBoxContainer"]
+z_index = 54
+layout_mode = 2
+alignment = 1
+
+[node name="WAVRButton" type="Button" parent="Hider/PauseMenu/VBoxContainer/InputSchemeContainer"]
+z_index = 55
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "WAVR"
+
+[node name="QWOPButton" type="Button" parent="Hider/PauseMenu/VBoxContainer/InputSchemeContainer"]
+z_index = 55
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "QWOP"
+
+[node name="LDURButton" type="Button" parent="Hider/PauseMenu/VBoxContainer/InputSchemeContainer"]
+z_index = 55
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "LDUR"
+
+[node name="Control2" type="Control" parent="Hider/PauseMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="ContinueContainer" type="HBoxContainer" parent="Hider/PauseMenu/VBoxContainer"]
+z_index = 54
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Hider/PauseMenu/VBoxContainer/ContinueContainer"]
+z_index = 55
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "RESUME"
+
+[node name="Spacer" type="Control" parent="Hider/PauseMenu/VBoxContainer/ContinueContainer"]
+layout_mode = 2
+
+[node name="QuitButton" type="Button" parent="Hider/PauseMenu/VBoxContainer/ContinueContainer"]
+z_index = 55
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "QUIT"
+
+[node name="Spacer2" type="Control" parent="Hider/PauseMenu/VBoxContainer/ContinueContainer"]
+layout_mode = 2
+
+[node name="LoadingScreen" type="Node2D" parent="Hider"]
+visible = false
 z_index = 51
 
+[node name="DisplayOutline" type="TextureRect" parent="Hider/LoadingScreen"]
+z_index = 53
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 547.0
+offset_top = 3.0
+offset_right = 771.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2.7, 2.9)
+texture = ExtResource("6_bhhdu")
+
+[node name="ProceedTarget" type="Node2D" parent="Hider/LoadingScreen"]
+position = Vector2(447, 323)
+scale = Vector2(0.7, 0.7)
+
+[node name="Hold Timer" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget"]
+z_index = 51
+offset_left = -152.857
+offset_top = -125.714
+offset_right = 147.143
+offset_bottom = -101.714
+color = Color(0.596078, 0.596078, 0.596078, 0.596078)
+
+[node name="TextureRect" type="TextureRect" parent="Hider/LoadingScreen/ProceedTarget"]
+modulate = Color(1, 1, 1, 0.501961)
+offset_left = -127.143
+offset_top = -95.7143
+offset_right = -63.1428
+offset_bottom = -31.7143
+scale = Vector2(4, 3)
+texture = ExtResource("9_miouo")
+stretch_mode = 2
+
+[node name="Target" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -152.857
+offset_top = -101.429
+offset_right = 147.143
+offset_bottom = 98.5714
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.752941, 0.72549, 0.258824, 0.164706)
+
+[node name="Big Target" type="Area2D" parent="Hider/LoadingScreen/ProceedTarget"]
+position = Vector2(-3, -2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hider/LoadingScreen/ProceedTarget/Big Target"]
+shape = SubResource("RectangleShape2D_bigtarget")
+
+[node name="Timer Pips" type="Node2D" parent="Hider/LoadingScreen/ProceedTarget"]
+position = Vector2(-2.8571, 1.42857)
+
+[node name="Pip" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = -148.0
+offset_top = -126.0
+offset_right = -123.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip2" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = -118.0
+offset_top = -126.0
+offset_right = -93.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip3" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = -88.0
+offset_top = -126.0
+offset_right = -63.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip4" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = -58.0
+offset_top = -126.0
+offset_right = -33.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip5" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = -28.0
+offset_top = -126.0
+offset_right = -3.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip6" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = 2.0
+offset_top = -126.0
+offset_right = 27.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip7" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = 32.0
+offset_top = -126.0
+offset_right = 57.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip8" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = 62.0
+offset_top = -126.0
+offset_right = 87.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip9" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = 92.0
+offset_top = -126.0
+offset_right = 117.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip10" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+offset_left = 122.0
+offset_top = -126.0
+offset_right = 147.0
+offset_bottom = -104.0
+color = Color(0, 0.803922, 0, 0.501961)
+
+[node name="Pip11" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+visible = false
+offset_left = 152.0
+offset_top = -126.0
+offset_right = 177.0
+offset_bottom = -104.0
+color = Color(0, 0.643698, 0, 0.501961)
+
+[node name="Pip12" type="ColorRect" parent="Hider/LoadingScreen/ProceedTarget/Timer Pips"]
+visible = false
+offset_left = 182.0
+offset_top = -126.0
+offset_right = 207.0
+offset_bottom = -104.0
+color = Color(0, 0.643137, 0, 0.501961)
+
+[node name="SkipTarget" type="Node2D" parent="Hider/LoadingScreen"]
+
+[node name="TextureRect" type="TextureRect" parent="Hider/LoadingScreen/SkipTarget"]
+modulate = Color(1, 1, 1, 0.501961)
+offset_left = 421.0
+offset_top = 92.0
+offset_right = 485.0
+offset_bottom = 156.0
+scale = Vector2(2, 1)
+texture = ExtResource("10_o3h8g")
+stretch_mode = 2
+
+[node name="SkipButton" type="Button" parent="Hider/LoadingScreen/SkipTarget"]
+offset_left = 425.0
+offset_top = 98.0
+offset_right = 534.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 32
+text = "SKIP"
+
+[node name="InfoDisplay" type="Node2D" parent="Hider/LoadingScreen"]
+position = Vector2(587, 42)
+
+[node name="BigImage" type="TextureRect" parent="Hider/LoadingScreen/InfoDisplay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 271.0
+offset_top = -4.0
+offset_right = 527.0
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_o3h8g")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="SmallImage" type="TextureRect" parent="Hider/LoadingScreen/InfoDisplay"]
+offset_left = 207.0
+offset_top = 10.0
+offset_right = 271.0
+offset_bottom = 74.0
+texture = ExtResource("12_1e7my")
+flip_h = true
+
+[node name="BigText" type="Label" parent="Hider/LoadingScreen/InfoDisplay"]
+offset_left = -2.0
+offset_top = 272.0
+offset_right = 528.0
+offset_bottom = 505.0
+theme_override_font_sizes/font_size = 22
+text = "This is a larger box of text. It will be filled with tutorials, tips, flavour text, and other tomfoolery. It can fit lots of text as long as you don't go overboard. If you do wanna go overboard, use multiple instance of text changes in the script.
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SmallText" type="Label" parent="Hider/LoadingScreen/InfoDisplay"]
+offset_left = -2.0
+offset_top = 74.0
+offset_right = 254.0
+offset_bottom = 252.0
+theme_override_font_sizes/font_size = 48
+text = "Display Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Spacer" type="ColorRect" parent="Hider/LoadingScreen/InfoDisplay"]
+offset_left = -13.0
+offset_top = 252.0
+offset_right = 537.0
+offset_bottom = 272.0
+color = Color(0, 0.635294, 0.909804, 1)
+
 [node name="Credits" type="Node2D" parent="Hider"]
+visible = false
 
 [node name="SkipButton" type="Control" parent="Hider/Credits"]
 visible = false
@@ -813,3 +1141,26 @@ color = Color(0, 0, 0, 1)
 libraries = {
 &"": SubResource("AnimationLibrary_ksbbd")
 }
+
+[node name="InputCallouts" parent="Hider" instance=ExtResource("10_yoq75")]
+z_index = 53
+offset_left = 392.0
+offset_top = 575.0
+offset_right = 1032.0
+offset_bottom = 647.0
+
+[node name="Pause" type="Node2D" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Pause"]
+z_index = 34
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("11_ksbbd")
+
+[node name="PauseButton" type="Button" parent="Pause"]
+z_index = 35
+offset_left = 11.0
+offset_top = 18.0
+offset_right = 53.0
+offset_bottom = 49.0
+text = "ESC"

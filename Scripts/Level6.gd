@@ -211,6 +211,28 @@ func play_traffic_animation_sequence():
 	print("Level6: Playing AllCars animation")
 	anim_player.play("AllCars")
 	
+	# Trigger random wave animations for all traffic NPCs
+	var car_names = ["CarA", "CarB", "CarC", "CarD", "CarE", "CarF"]
+	for car_name in car_names:
+		if traffic.has_node(car_name):
+			var car = traffic.get_node(car_name)
+			# Each car has CarNPC and CarNPC2
+			for npc_name in ["CarNPC", "CarNPC2"]:
+				if car.has_node(npc_name):
+					var npc = car.get_node(npc_name)
+					if npc.has_node("AnimationPlayer"):
+						var npc_anim = npc.get_node("AnimationPlayer")
+						# Randomly select from Wave, Wave2, or Wave3
+						var rand = randf()
+						var wave_anim = "Wave"
+						if rand < 0.333:
+							wave_anim = "Wave"
+						elif rand < 0.666:
+							wave_anim = "Wave2"
+						else:
+							wave_anim = "Wave3"
+						npc_anim.play(wave_anim)
+	
 	# Wait for animation to complete (adjust duration if needed)
 	await get_tree().create_timer(18.0).timeout
 	
@@ -567,9 +589,7 @@ func _on_level_ended():
 	# Wait for Go animation to complete
 	await get_tree().create_timer(4.0).timeout
 	
-	# Stop audio
-	if music_player:
-		music_player.stop()
+	# Stop ambience but keep music playing for credits
 	if ambience_player:
 		ambience_player.stop()
 	
@@ -589,14 +609,19 @@ func _on_level_ended():
 			
 			# Don't show Level Result for Level 6 pass - go straight to credits
 			
-			# Show hider and play credits
-			if player.hider:
-				player.hider.visible = true
-				if player.hider.has_node("AnimationPlayer"):
+			# Show hider in credits mode
+			if player and player.has_method("show_hider"):
+				player.show_hider(3)  # HiderMode.CREDITS
+				# Play credits animation
+				if player.hider and player.hider.has_node("AnimationPlayer"):
 					var credits_anim = player.hider.get_node("AnimationPlayer")
 					credits_anim.play("CreditScroll")
 					# Wait for credits to complete (30 seconds)
 					await get_tree().create_timer(30.0).timeout
+			
+			# Stop music after credits finish
+			if music_player:
+				music_player.stop()
 			
 			# Return to main menu
 			var next_level = 6  # Stay on level 6 since it's the last level

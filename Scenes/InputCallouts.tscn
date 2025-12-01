@@ -1,0 +1,204 @@
+[gd_scene load_steps=7 format=3 uid="uid://bayifw8dixpg"]
+
+[ext_resource type="Script" uid="uid://b13rfsqmvxods" path="res://Scripts/InputCallouts.gd" id="1_3y8gx"]
+[ext_resource type="Texture2D" uid="uid://b4gn6dairvat6" path="res://Assets/UI assets/BlankKey.png" id="1_s5rwj"]
+[ext_resource type="Texture2D" uid="uid://b1fwi308cvffp" path="res://Assets/UI assets/LeftKey.png" id="2_7b4q4"]
+[ext_resource type="Texture2D" uid="uid://dcbq6ji8xrm5d" path="res://Assets/UI assets/DownKey.png" id="3_lpj0x"]
+[ext_resource type="Texture2D" uid="uid://cinyinmqije58" path="res://Assets/UI assets/UpKey.png" id="4_ak8xf"]
+[ext_resource type="Texture2D" uid="uid://7ih1tgno8d34" path="res://Assets/UI assets/RightKey.png" id="5_lhlit"]
+
+[node name="InputCallouts" type="HBoxContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.0
+offset_top = 253.0
+offset_right = 458.0
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 64
+script = ExtResource("1_3y8gx")
+
+[node name="Key1" type="Control" parent="."]
+layout_mode = 2
+
+[node name="LetterKey" type="TextureRect" parent="Key1"]
+layout_mode = 2
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_s5rwj")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Key1"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 55.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 32
+text = "W"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArrowKey" type="TextureRect" parent="Key1"]
+visible = false
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("2_7b4q4")
+
+[node name="Action1" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Action1"]
+layout_mode = 2
+offset_top = -15.0
+offset_right = 104.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+text = "
+Shoulder"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Key2" type="Control" parent="."]
+layout_mode = 2
+
+[node name="LetterKey" type="TextureRect" parent="Key2"]
+layout_mode = 2
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_s5rwj")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Key2"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 55.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 32
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArrowKey" type="TextureRect" parent="Key2"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_lpj0x")
+
+[node name="Action2" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Action2"]
+layout_mode = 2
+offset_top = -15.0
+offset_right = 104.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+text = "
+Elbow"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Key3" type="Control" parent="."]
+layout_mode = 2
+
+[node name="LetterKey" type="TextureRect" parent="Key3"]
+layout_mode = 2
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_s5rwj")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Key3"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 55.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 32
+text = "V"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArrowKey" type="TextureRect" parent="Key3"]
+visible = false
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("4_ak8xf")
+
+[node name="Action3" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Action3"]
+layout_mode = 2
+offset_top = -15.0
+offset_right = 104.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+text = "
+Wrist (ccw)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer3" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Key4" type="Control" parent="."]
+layout_mode = 2
+
+[node name="LetterKey" type="TextureRect" parent="Key4"]
+layout_mode = 2
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("1_s5rwj")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Key4"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 55.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 32
+text = "R"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArrowKey" type="TextureRect" parent="Key4"]
+visible = false
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("5_lhlit")
+
+[node name="Action4" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Action4"]
+layout_mode = 2
+offset_top = -15.0
+offset_right = 104.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+text = "
+Wrist (cw)"
+horizontal_alignment = 1
+vertical_alignment = 1

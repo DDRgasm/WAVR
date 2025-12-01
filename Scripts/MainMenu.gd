@@ -33,6 +33,7 @@ extends Control
 @onready var background_animation: Node2D = $BackgroundAnimation
 @onready var vbox_outline: TextureRect = $VBoxContainerOutline
 @onready var main_color_rect: ColorRect = $MainColorRect
+@onready var input_callouts: HBoxContainer = $InputCallouts
 
 # Audio
 @onready var music_player: AudioStreamPlayer = $Music
@@ -210,12 +211,24 @@ func _on_qwop_pressed():
 	input_scheme = "QWOP"
 	update_input_scheme_buttons()
 	update_input_actions()
+	if input_callouts:
+		print("MainMenu: input_callouts node: ", input_callouts)
+		print("MainMenu: input_callouts script: ", input_callouts.get_script())
+		if input_callouts.get_script():
+			print("MainMenu: Calling update_for_scheme with QWOP")
+			input_callouts.update_for_scheme(input_scheme)
+		else:
+			print("MainMenu: ERROR - No script attached to InputCallouts!")
+	else:
+		print("MainMenu: input_callouts is null")
 
 func _on_wavr_pressed():
 	play_button_click()
 	input_scheme = "WAVR"
 	update_input_scheme_buttons()
 	update_input_actions()
+	if input_callouts and input_callouts.get_script():
+		input_callouts.update_for_scheme(input_scheme)
 
 func update_input_scheme_buttons():
 	qwop_button.disabled = (input_scheme == "QWOP")
@@ -288,19 +301,19 @@ func _on_quit_pressed():
 # Button hover handlers
 func _on_start_button_hover():
 	if menu_player and menu_player.has_method("set_hover_pose"):
-		menu_player.set_hover_pose(-25, -20, 20)
+		menu_player.set_hover_pose(-20, -15, 10)
 
 func _on_level_select_button_hover():
 	if menu_player and menu_player.has_method("set_hover_pose"):
-		menu_player.set_hover_pose(10, -45, -10)
+		menu_player.set_hover_pose(-10, -10, 5)
 
 func _on_options_button_hover():
 	if menu_player and menu_player.has_method("set_hover_pose"):
-		menu_player.set_hover_pose(35, -55, -5)
+		menu_player.set_hover_pose(5, -20, 5)
 
 func _on_quit_button_hover():
 	if menu_player and menu_player.has_method("set_hover_pose"):
-		menu_player.set_hover_pose(45, -45, -5)
+		menu_player.set_hover_pose(20, -25, -5)
 
 func _on_button_hover_exit():
 	if menu_player and menu_player.has_method("clear_hover_pose"):
@@ -504,6 +517,8 @@ func _on_ldur_pressed():
 	input_scheme = "LDUR"
 	update_input_scheme_buttons()
 	update_input_actions()
+	if input_callouts and input_callouts.get_script():
+		input_callouts.update_for_scheme(input_scheme)
 
 func _on_reset_pressed():
 	play_button_click()
@@ -519,16 +534,29 @@ func _on_reset_pressed():
 
 func _on_credits_pressed():
 	play_button_click()
-	# Show hider and play credits on menu player
-	if menu_player and menu_player.has_node("Hider"):
-		var hider = menu_player.get_node("Hider")
-		hider.visible = true
-		if hider.has_node("AnimationPlayer"):
-			var credits_anim = hider.get_node("AnimationPlayer")
-			credits_anim.play("CreditScroll")
-			# Wait 30 seconds then hide
-			await get_tree().create_timer(30.0).timeout
-			hider.visible = false
+	print("MainMenu: Credits button pressed")
+	print("MainMenu: menu_player exists: ", menu_player != null)
+	
+	if menu_player:
+		print("MainMenu: menu_player has show_hider method: ", menu_player.has_method("show_hider"))
+		if menu_player.has_method("show_hider"):
+			# Access HiderMode enum through the script constant (value 3 = CREDITS)
+			print("MainMenu: Calling show_hider(3)")
+			menu_player.show_hider(3)  # HiderMode.CREDITS
+			if menu_player.hider and menu_player.hider.has_node("AnimationPlayer"):
+				var credits_anim = menu_player.hider.get_node("AnimationPlayer")
+				print("MainMenu: Playing CreditScroll animation")
+				credits_anim.play("CreditScroll")
+				# Wait 30 seconds then hide
+				await get_tree().create_timer(30.0).timeout
+				print("MainMenu: Hiding credits")
+				menu_player.hide_hider()
+			else:
+				print("MainMenu: ERROR - No AnimationPlayer found in hider")
+		else:
+			print("MainMenu: ERROR - menu_player doesn't have show_hider method")
+	else:
+		print("MainMenu: ERROR - menu_player is null")
 
 func save_game_data():
 	var save_file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)

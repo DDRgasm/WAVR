@@ -11,6 +11,12 @@ extends Node2D
 @onready var level_result: Node2D = $"Level Result"
 @onready var debug_text: Label = $"Debug Text"
 @onready var stats_background: ColorRect = $"Stats Background"
+@onready var hider: Node2D = $Hider
+@onready var hider_colorect: ColorRect = $Hider/ColorRect
+@onready var pause_menu: Node2D = $Hider/PauseMenu
+@onready var loading_screen: Node2D = $Hider/LoadingScreen
+@onready var credits_screen: Node2D = $Hider/Credits
+@onready var pause_node: Node2D = $Pause
 
 # Base rotation values (in radians) - the resting position
 var base_arm_rotation: float = 1.5708  # 90 degrees (pointing down)
@@ -71,6 +77,10 @@ func _ready():
 		level_result.visible = false
 	if debug_text:
 		debug_text.visible = false
+	
+	# Hide pause node (button and background) in main menu
+	if pause_node:
+		pause_node.visible = false
 
 func _process(delta: float):
 	if is_hovering_button:
@@ -134,3 +144,53 @@ func set_hover_pose(arm_deg: float, forearm_deg: float, hand_deg: float):
 
 func clear_hover_pose():
 	is_hovering_button = false
+
+# Hider system for credits
+enum HiderMode {
+	NONE,
+	PAUSE,
+	LOADING,
+	CREDITS
+}
+
+var current_hider_mode: HiderMode = HiderMode.NONE
+
+func show_hider(mode: int):
+	print("MainMenuPlayer: show_hider called with mode: ", mode)
+	current_hider_mode = mode as HiderMode
+	
+	if not hider:
+		print("MainMenuPlayer: ERROR - hider not found")
+		return
+	
+	# Show hider background
+	hider.visible = true
+	if hider_colorect:
+		hider_colorect.visible = true
+	
+	# Hide all mode screens first
+	if pause_menu:
+		pause_menu.visible = false
+	if loading_screen:
+		loading_screen.visible = false
+	if credits_screen:
+		credits_screen.visible = false
+	
+	# Show the appropriate screen based on mode
+	match current_hider_mode:
+		HiderMode.PAUSE:
+			if pause_menu:
+				pause_menu.visible = true
+		HiderMode.LOADING:
+			if loading_screen:
+				loading_screen.visible = true
+		HiderMode.CREDITS:
+			if credits_screen:
+				credits_screen.visible = true
+				print("MainMenuPlayer: Credits screen shown")
+
+func hide_hider():
+	print("MainMenuPlayer: hide_hider called")
+	current_hider_mode = HiderMode.NONE
+	if hider:
+		hider.visible = false

@@ -24,6 +24,24 @@ signal level_ended
 @onready var clear_condition_label: Label = $"Stats/Clear Condition/Clear Condition"
 @onready var timer_label: Label = $"Stats/Timer/Timer"
 @onready var hider: Node2D = $Hider
+@onready var hider_colorect: ColorRect = $Hider/ColorRect
+@onready var pause_menu: Node2D = $Hider/PauseMenu
+@onready var loading_screen: Node2D = $Hider/LoadingScreen
+@onready var credits_screen: Node2D = $Hider/Credits
+@onready var pause_button: Button = $Pause/PauseButton
+@onready var resume_button: Button = $Hider/PauseMenu/VBoxContainer/ContinueContainer/ResumeButton
+@onready var pause_quit_button: Button = $Hider/PauseMenu/VBoxContainer/ContinueContainer/QuitButton
+@onready var pause_wavr_button: Button = $Hider/PauseMenu/VBoxContainer/InputSchemeContainer/WAVRButton
+@onready var pause_qwop_button: Button = $Hider/PauseMenu/VBoxContainer/InputSchemeContainer/QWOPButton
+@onready var pause_ldur_button: Button = $Hider/PauseMenu/VBoxContainer/InputSchemeContainer/LDURButton
+@onready var input_callouts: HBoxContainer = $Hider/InputCallouts
+@onready var loading_skip_button: Button = $Hider/LoadingScreen/SkipTarget/SkipButton
+@onready var loading_proceed_target: Area2D = $"Hider/LoadingScreen/ProceedTarget/Big Target"
+@onready var loading_timer_pips_container: Node2D = $"Hider/LoadingScreen/ProceedTarget/Timer Pips"
+@onready var loading_big_image: TextureRect = $Hider/LoadingScreen/InfoDisplay/BigImage
+@onready var loading_small_image: TextureRect = $Hider/LoadingScreen/InfoDisplay/SmallImage
+@onready var loading_big_text: Label = $Hider/LoadingScreen/InfoDisplay/BigText
+@onready var loading_small_text: Label = $Hider/LoadingScreen/InfoDisplay/SmallText
 @onready var fail_x_label: Label = $"Target Zone/Feedback/FailX"
 @onready var success_plus_label: Label = $"Target Zone/Feedback/SuccessPlus"
 @onready var angry_minus_label: Label = $"Target Zone/Feedback/AngryMinus"
@@ -88,7 +106,7 @@ var current_npc: Node2D = null  # Reference to current NPC being waved at
 var level_time_remaining: float = 180.0  # 3 minutes in seconds
 var wave_backs_required: int = 5
 var level_complete: bool = false
-var level_active: bool = true
+var level_active: bool = false
 var current_level: int = 1  # Which level the player is currently in
 
 # Catch value change rates (base values)
@@ -130,6 +148,16 @@ var disabled_quadrants: Array = [false, false, false, false]  # TL, TR, BL, BR
 var target_catch_value_level6: float = 100.0  # Set by Level6.gd
 var max_catch_buffer_level6: float = 120.0  # Set by Level6.gd
 var traffic_phase_active: bool = false  # Pauses catch decay during traffic
+
+# Loading Screen system
+var loading_screen_active: bool = false
+var loading_proceed_timer: float = 0.0
+var loading_proceed_duration: float = 1.0
+var loading_timer_pips: Array = []
+var loading_current_page_index: int = 0
+var loading_pages: Array = []
+var loading_proceed_cooldown: float = 0.0
+var loading_proceed_cooldown_duration: float = 1.0
 
 func _ready():
 	# Initialize current rotations from the scene
@@ -180,14 +208,52 @@ func _ready():
 		debug_mode = get_tree().root.get_meta("debug_mode")
 		if debug_text_label:
 			debug_text_label.visible = debug_mode
+	
+	# Setup pause menu
+	setup_pause_menu()
+	
+	# Setup loading screen
+	setup_loading_screen()
+	
+	# Hide hider by default
+	if hider:
+		hider.visible = false
+	
+	# Check if we're in main menu - hide pause button
+	var scene_name = get_tree().current_scene.name if get_tree().current_scene else ""
+	if scene_name == "MainMenu" or scene_name == "Title":
+		if pause_button:
+			pause_button.visible = false
+	else:
+		# In a level, defer loading screen until after level sets current_level
+		call_deferred("_show_loading_screen_if_in_level")
+
+func _show_loading_screen_if_in_level():
+	# This is called after all _ready() functions have completed
+	# so current_level will be set correctly by the level script
+	# Only show loading screen for level 1 (tutorial)
+	if current_level == 1:
+		show_hider(HiderMode.LOADING)
+	elif current_level >= 2 and current_level <= 6:
+		# For levels 2-6, skip loading screen and start directly
+		start_level()
 
 func _process(delta: float):
-	if level_active:
+	# Handle loading screen
+	if loading_screen_active:
+		handle_loading_screen(delta)
+	
+	if level_active and not is_paused and not loading_screen_active:
 		handle_level_timer(delta)
 	
+	# Always allow input so arm can drop naturally
 	handle_input(delta)
+	
 	apply_rotations(delta)
-	handle_wave_gameplay(delta)
+	
+	if not loading_screen_active and level_active:
+		handle_wave_gameplay(delta)
+	
 	handle_feedback_display(delta)
 	
 	if debug_mode:
@@ -598,6 +664,10 @@ func get_hand_quadrants() -> Array:
 func set_current_npc(npc: Node2D):
 	current_npc = npc
 	
+	# Re-enable input when an NPC is ready
+	if npc:
+		input_enabled = true
+	
 	# Update catch parameters based on NPC archetype
 	if npc and npc.has_method("get_catch_initiation_multiplier"):
 		catch_initiation_time = base_catch_initiation_time * npc.get_catch_initiation_multiplier()
@@ -889,3 +959,525 @@ func update_timer_pips():
 				timer_pips[i].color = pip_color_green
 			else:
 				timer_pips[i].visible = false
+
+# Hider System
+enum HiderMode {
+	NONE,
+	PAUSE,
+	LOADING,
+	CREDITS
+}
+
+var current_hider_mode: HiderMode = HiderMode.NONE
+var is_paused: bool = false
+
+func _input(event: InputEvent):
+	# Handle ESC key for pause/unpause
+	if event.is_action_pressed("ui_cancel"):
+		# Prevent ESC during loading screen
+		if loading_screen_active:
+			return
+		
+		print("Player: ESC key pressed, is_paused: ", is_paused)
+		var scene_name = get_tree().current_scene.name if get_tree().current_scene else ""
+		print("Player: Scene name: ", scene_name)
+		if scene_name != "MainMenu" and scene_name != "Title":
+			if is_paused:
+				# Already paused, resume the game
+				print("Player: Resuming game")
+				hide_hider()
+			else:
+				# Not paused, show pause menu
+				print("Player: Showing pause menu")
+				show_hider(HiderMode.PAUSE)
+
+func setup_pause_menu():
+	print("Player: Setting up pause menu")
+	# Connect pause button signals
+	if pause_button:
+		print("Player: Pause button found, connecting signal")
+		pause_button.pressed.connect(_on_pause_button_pressed)
+		# Ensure pause button is visible in levels (not main menu)
+		var scene_name = get_tree().current_scene.name if get_tree().current_scene else ""
+		print("Player: Current scene name: ", scene_name)
+		if scene_name != "MainMenu" and scene_name != "Title":
+			pause_button.visible = true
+			# Ensure button can receive input
+			pause_button.mouse_filter = Control.MOUSE_FILTER_STOP
+			print("Player: Pause button made visible and clickable")
+		else:
+			print("Player: In MainMenu/Title, pause button hidden")
+	else:
+		print("Player: ERROR - Pause button not found!")
+	if resume_button:
+		resume_button.pressed.connect(_on_resume_button_pressed)
+	if pause_quit_button:
+		pause_quit_button.pressed.connect(_on_pause_quit_button_pressed)
+	
+	# Connect input scheme buttons
+	if pause_wavr_button:
+		pause_wavr_button.pressed.connect(_on_pause_wavr_pressed)
+	if pause_qwop_button:
+		pause_qwop_button.pressed.connect(_on_pause_qwop_pressed)
+	if pause_ldur_button:
+		pause_ldur_button.pressed.connect(_on_pause_ldur_pressed)
+	
+	# Update input scheme buttons based on current scheme
+	update_pause_input_scheme_buttons()
+
+func show_hider(mode: HiderMode):
+	current_hider_mode = mode
+	
+	if not hider:
+		return
+	
+	# Show hider background
+	hider.visible = true
+	if hider_colorect:
+		hider_colorect.visible = true
+	
+	# Hide all mode screens first
+	if pause_menu:
+		pause_menu.visible = false
+	if loading_screen:
+		loading_screen.visible = false
+	if credits_screen:
+		credits_screen.visible = false
+	
+	# Show the appropriate screen based on mode
+	match mode:
+		HiderMode.PAUSE:
+			if pause_menu:
+				pause_menu.visible = true
+			pause_game()
+		HiderMode.LOADING:
+			if loading_screen:
+				loading_screen.visible = true
+			start_loading_screen()
+		HiderMode.CREDITS:
+			if credits_screen:
+				credits_screen.visible = true
+			# Keep audio playing during credits (but don't pause the game)
+			set_audio_process_mode(Node.PROCESS_MODE_ALWAYS)
+
+func hide_hider():
+	# Reset audio mode if we're hiding from credits (which doesn't set is_paused)
+	if current_hider_mode == HiderMode.CREDITS:
+		set_audio_process_mode(Node.PROCESS_MODE_INHERIT)
+	
+	current_hider_mode = HiderMode.NONE
+	if hider:
+		hider.visible = false
+	if is_paused:
+		unpause_game()
+
+func pause_game():
+	is_paused = true
+	get_tree().paused = true
+	# Make sure pause menu and hider can still process
+	if hider:
+		hider.process_mode = Node.PROCESS_MODE_ALWAYS
+	if pause_menu:
+		pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
+	# Make sure THIS node can still process input to handle unpause
+	self.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	# Keep audio playing during pause
+	set_audio_process_mode(Node.PROCESS_MODE_ALWAYS)
+
+func unpause_game():
+	is_paused = false
+	get_tree().paused = false
+	if hider:
+		hider.process_mode = Node.PROCESS_MODE_INHERIT
+	if pause_menu:
+		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
+	# Reset this node's process mode
+	self.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	# Reset audio to normal processing
+	set_audio_process_mode(Node.PROCESS_MODE_INHERIT)
+
+func set_audio_process_mode(mode: Node.ProcessMode):
+	# Find all AudioStreamPlayer nodes in the scene and set their process mode
+	var root = get_tree().current_scene
+	if root:
+		var audio_players = find_audio_players(root)
+		for player in audio_players:
+			player.process_mode = mode
+
+func find_audio_players(node: Node) -> Array:
+	var players = []
+	if node is AudioStreamPlayer or node is AudioStreamPlayer2D or node is AudioStreamPlayer3D:
+		players.append(node)
+	for child in node.get_children():
+		players += find_audio_players(child)
+	return players
+
+func _on_pause_button_pressed():
+	print("Player: Pause button pressed")
+	show_hider(HiderMode.PAUSE)
+
+func _on_resume_button_pressed():
+	hide_hider()
+
+func _on_pause_quit_button_pressed():
+	# Unpause first
+	unpause_game()
+	hide_hider()
+	# Store the input scheme for main menu
+	var input_scheme = get_current_input_scheme()
+	get_tree().root.set_meta("input_scheme", input_scheme)
+	# Go back to main menu
+	get_tree().change_scene_to_file("res://Scenes/MainMenu.tscn")
+
+# Input scheme management for pause menu
+func _on_pause_wavr_pressed():
+	update_input_scheme("WAVR")
+	update_pause_input_scheme_buttons()
+	if input_callouts and input_callouts.get_script():
+		input_callouts.update_for_scheme("WAVR")
+
+func _on_pause_qwop_pressed():
+	update_input_scheme("QWOP")
+	update_pause_input_scheme_buttons()
+	if input_callouts and input_callouts.get_script():
+		input_callouts.update_for_scheme("QWOP")
+
+func _on_pause_ldur_pressed():
+	update_input_scheme("LDUR")
+	update_pause_input_scheme_buttons()
+	if input_callouts and input_callouts.get_script():
+		input_callouts.update_for_scheme("LDUR")
+
+func update_pause_input_scheme_buttons():
+	var current_scheme = get_current_input_scheme()
+	if pause_wavr_button:
+		pause_wavr_button.disabled = (current_scheme == "WAVR")
+	if pause_qwop_button:
+		pause_qwop_button.disabled = (current_scheme == "QWOP")
+	if pause_ldur_button:
+		pause_ldur_button.disabled = (current_scheme == "LDUR")
+
+func get_current_input_scheme() -> String:
+	# Check which key is bound to move_arm_up to determine scheme
+	var events = InputMap.action_get_events("move_arm_up")
+	if events.size() > 0:
+		var key_event = events[0] as InputEventKey
+		if key_event:
+			match key_event.physical_keycode:
+				KEY_Q:
+					return "QWOP"
+				KEY_W:
+					return "WAVR"
+				KEY_LEFT:
+					return "LDUR"
+	return "WAVR"  # Default
+
+func update_input_scheme(scheme: String):
+	# Clear existing actions
+	InputMap.action_erase_events("move_arm_up")
+	InputMap.action_erase_events("move_forearm_up")
+	InputMap.action_erase_events("rotate_hand_ccw")
+	InputMap.action_erase_events("rotate_hand_cw")
+	
+	if scheme == "QWOP":
+		var q_key = InputEventKey.new()
+		q_key.physical_keycode = KEY_Q
+		InputMap.action_add_event("move_arm_up", q_key)
+		
+		var w_key = InputEventKey.new()
+		w_key.physical_keycode = KEY_W
+		InputMap.action_add_event("move_forearm_up", w_key)
+		
+		var o_key = InputEventKey.new()
+		o_key.physical_keycode = KEY_O
+		InputMap.action_add_event("rotate_hand_ccw", o_key)
+		
+		var p_key = InputEventKey.new()
+		p_key.physical_keycode = KEY_P
+		InputMap.action_add_event("rotate_hand_cw", p_key)
+	elif scheme == "WAVR":
+		var w_key = InputEventKey.new()
+		w_key.physical_keycode = KEY_W
+		InputMap.action_add_event("move_arm_up", w_key)
+		
+		var a_key = InputEventKey.new()
+		a_key.physical_keycode = KEY_A
+		InputMap.action_add_event("move_forearm_up", a_key)
+		
+		var v_key = InputEventKey.new()
+		v_key.physical_keycode = KEY_V
+		InputMap.action_add_event("rotate_hand_ccw", v_key)
+		
+		var r_key = InputEventKey.new()
+		r_key.physical_keycode = KEY_R
+		InputMap.action_add_event("rotate_hand_cw", r_key)
+	else:  # LDUR
+		var left_key = InputEventKey.new()
+		left_key.physical_keycode = KEY_LEFT
+		InputMap.action_add_event("move_arm_up", left_key)
+		
+		var down_key = InputEventKey.new()
+		down_key.physical_keycode = KEY_DOWN
+		InputMap.action_add_event("move_forearm_up", down_key)
+		
+		var up_key = InputEventKey.new()
+		up_key.physical_keycode = KEY_UP
+		InputMap.action_add_event("rotate_hand_ccw", up_key)
+		
+		var right_key = InputEventKey.new()
+		right_key.physical_keycode = KEY_RIGHT
+		InputMap.action_add_event("rotate_hand_cw", right_key)
+	
+	# Store in tree root for persistence
+	get_tree().root.set_meta("input_scheme", scheme)
+
+# Loading Screen System
+func setup_loading_screen():
+	# Get timer pips for loading screen
+	if loading_timer_pips_container:
+		for child in loading_timer_pips_container.get_children():
+			loading_timer_pips.append(child)
+			child.visible = false
+	
+	# Connect skip button
+	if loading_skip_button:
+		if not loading_skip_button.pressed.is_connected(_on_loading_skip_pressed):
+			loading_skip_button.pressed.connect(_on_loading_skip_pressed)
+	
+	# Initialize info pages for all levels
+	initialize_loading_pages()
+
+func initialize_loading_pages():
+	loading_pages.clear()
+	
+	# Define pages for each level
+	var level1_pages = [
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Watching.png",
+			"big_text": "Welcome to Roof Shack, human. Before we proceed with your employment as a Greeter, please prove that you are capable of moving your SHOULDER and ELBOW.",
+			"small_text": "On the Job Training"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Happy.png",
+			"big_text": "Excellent. You'll need to use your Shoulder and Elbow to catch a customer's attention, but if you really want to inspire them to wave back, you'll need to use your WRIST.",
+			"small_text": "On the Job Training"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Watching.png",
+			"big_text": "Your task is to coordinate your Shoulder, Elbow, and Wrist while a shopper is watching, and get them to Wave Back. Your quota is 5 Wave Backs per shift, but if you can get at least 10, it'll look great on your performance review.",
+			"small_text": "On the Job Training"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Awkward.png",
+			"big_text": "Now get out there and start waving at shoppers. Oh, and try to do something about that smile... There's something unsettling about it... It'll definitely haunt me in my sleep mode.",
+			"small_text": "On the Job Training"
+		}
+	]
+	
+	var level2_pages = [
+		{
+			"big_image": "res://Assets/LeftBot.png",
+			"small_image": "res://Assets/NPC Emote.png",
+			"big_text": "L2P1 placeholder",
+			"small_text": "L2 placeholder"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Confused.png",
+			"big_text": "L2P2 placeholder",
+			"small_text": "L2 placeholder"
+		}
+	]
+	
+	var level3_pages = [
+		{
+			"big_image": "res://Assets/LeftBot.png",
+			"small_image": "res://Assets/NPC Emote.png",
+			"big_text": "L3P1 placeholder",
+			"small_text": "L3 placeholder"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Confused.png",
+			"big_text": "L3P2 placeholder",
+			"small_text": "L3 placeholder"
+		}
+	]
+	
+	var level4_pages = [
+		{
+			"big_image": "res://Assets/LeftBot.png",
+			"small_image": "res://Assets/NPC Emote.png",
+			"big_text": "L4P1 placeholder",
+			"small_text": "L4 placeholder"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Confused.png",
+			"big_text": "L4P2 placeholder",
+			"small_text": "L4 placeholder"
+		}
+	]
+	
+	var level5_pages = [
+		{
+			"big_image": "res://Assets/LeftBot.png",
+			"small_image": "res://Assets/NPC Emote.png",
+			"big_text": "L5P1 placeholder",
+			"small_text": "L5 placeholder"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Confused.png",
+			"big_text": "L5P2 placeholder",
+			"small_text": "L5 placeholder"
+		}
+	]
+	
+	var level6_pages = [
+		{
+			"big_image": "res://Assets/LeftBot.png",
+			"small_image": "res://Assets/NPC Emote.png",
+			"big_text": "L6P1 placeholder",
+			"small_text": "L6 placeholder"
+		},
+		{
+			"big_image": "res://Assets/RightBot.png",
+			"small_image": "res://Assets/NPC Confused.png",
+			"big_text": "L6P2 placeholder",
+			"small_text": "L6 placeholder"
+		}
+	]
+	
+	# Store all level pages
+	loading_pages = [
+		level1_pages,
+		level2_pages,
+		level3_pages,
+		level4_pages,
+		level5_pages,
+		level6_pages
+	]
+
+func start_loading_screen():
+	loading_screen_active = true
+	loading_current_page_index = 0
+	loading_proceed_timer = 0.0
+	loading_proceed_cooldown = 0.0
+	
+	# Display first page
+	display_loading_page(loading_current_page_index)
+
+func display_loading_page(page_index: int):
+	if current_level < 1 or current_level > 6:
+		return
+	
+	var level_pages = loading_pages[current_level - 1]
+	if page_index < 0 or page_index >= level_pages.size():
+		return
+	
+	var page_data = level_pages[page_index]
+	
+	# Update display elements
+	if loading_big_image:
+		loading_big_image.texture = load(page_data["big_image"])
+	if loading_small_image:
+		loading_small_image.texture = load(page_data["small_image"])
+	if loading_big_text:
+		loading_big_text.text = page_data["big_text"]
+	if loading_small_text:
+		loading_small_text.text = page_data["small_text"]
+	
+	# Reset proceed timer
+	loading_proceed_timer = 0.0
+	update_loading_timer_pips()
+
+func update_loading_timer_pips():
+	var progress = loading_proceed_timer / loading_proceed_duration
+	var visible_pips = int(progress * float(loading_timer_pips.size()))
+	
+	for i in range(loading_timer_pips.size()):
+		if i < visible_pips:
+			loading_timer_pips[i].visible = true
+		else:
+			loading_timer_pips[i].visible = false
+
+func handle_loading_screen(delta: float):
+	if not loading_screen_active:
+		return
+	
+	# Handle proceed cooldown
+	if loading_proceed_cooldown > 0:
+		loading_proceed_cooldown -= delta
+		if loading_proceed_cooldown < 0:
+			loading_proceed_cooldown = 0.0
+	
+	# Check if hand is in proceed target (only if not in cooldown)
+	if loading_proceed_cooldown <= 0 and loading_proceed_target and hand_hitbox:
+		if loading_proceed_target.overlaps_area(hand_hitbox):
+			loading_proceed_timer += delta
+			update_loading_timer_pips()
+			
+			# Check if proceed action is complete
+			if loading_proceed_timer >= loading_proceed_duration:
+				proceed_to_next_loading_page()
+		else:
+			# Hand left target, reset timer
+			if loading_proceed_timer > 0:
+				loading_proceed_timer = 0.0
+				update_loading_timer_pips()
+
+func proceed_to_next_loading_page():
+	# Set cooldown to prevent immediate re-proceed
+	loading_proceed_cooldown = loading_proceed_cooldown_duration
+	loading_proceed_timer = 0.0
+	update_loading_timer_pips()
+	
+	# Check if there are more pages
+	if current_level < 1 or current_level > 6:
+		end_loading_screen()
+		return
+	
+	var level_pages = loading_pages[current_level - 1]
+	loading_current_page_index += 1
+	
+	if loading_current_page_index >= level_pages.size():
+		# No more pages, end loading screen
+		end_loading_screen()
+	else:
+		# Display next page
+		display_loading_page(loading_current_page_index)
+
+func _on_loading_skip_pressed():
+	end_loading_screen()
+
+func end_loading_screen():
+	loading_screen_active = false
+	hide_hider()
+	# Start the level
+	start_level()
+
+func start_level():
+	# This function starts the actual level gameplay
+	level_active = true
+	can_catch = true
+	
+	# Reset wave state to prevent catching before NPCs arrive
+	catch_active = false
+	catch_value = 0.0
+	time_in_target = 0.0
+	catch_timer = 0.0
+	current_npc = null
+	
+	# Level 6 doesn't use spawning NPCs, so re-enable input immediately
+	if current_level == 6:
+		input_enabled = true
+	else:
+		# Disable input until an NPC is ready (arm will naturally return to base)
+		input_enabled = false

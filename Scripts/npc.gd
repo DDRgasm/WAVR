@@ -115,13 +115,34 @@ func play_wave():
 	current_state = State.WAVING
 	stop_wait_timer()  # Stop waiting timer when catch succeeds
 	
-	# Angry NPCs don't wave, just wait a bit and complete
+	# Angry NPCs play Rude animations instead of waving
 	if archetype == Archetype.ANGRY:
-		await get_tree().create_timer(3.0).timeout
-		wave_complete.emit()
+		if animation_player:
+			# 75% chance for Rude, 25% chance for Rude2
+			var rand = randf()
+			if rand < 0.75:
+				animation_player.play("Rude")
+			else:
+				animation_player.play("Rude2")
+			# Wait for animation to finish
+			await animation_player.animation_finished
+			wave_complete.emit()
+		else:
+			await get_tree().create_timer(3.0).timeout
+			wave_complete.emit()
 	else:
 		if animation_player:
-			animation_player.play("Wave")
+			# Randomly select from Wave, Wave2, or Wave3 (1/3 chance each)
+			var rand = randf()
+			var wave_anim = "Wave"
+			if rand < 0.333:
+				wave_anim = "Wave"
+			elif rand < 0.666:
+				wave_anim = "Wave2"
+			else:
+				wave_anim = "Wave3"
+			
+			animation_player.play(wave_anim)
 			# Wait for animation to finish
 			await animation_player.animation_finished
 			wave_complete.emit()

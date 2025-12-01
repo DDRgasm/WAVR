@@ -351,6 +351,8 @@ func _on_npc_reached_exit():
 				break
 
 func trigger_special_ending():
+	print("Level5: trigger_special_ending called")
+	
 	# Clear all quadrant blocks
 	if player:
 		player.set_quadrant_disabled(0, false)
@@ -361,32 +363,65 @@ func trigger_special_ending():
 	
 	# Stop spawning new NPCs
 	spawn_timer = -999.0
+	ready_to_spawn = false
 	
-	# End any active wave immediately and rush current NPC to exit
-	if current_npc and is_instance_valid(current_npc):
-		if player:
-			player.set_can_catch(false)
-			player.set_input_enabled(false)
-		current_npc.stop_wait_timer()
-		current_npc.hide_emote()
-		exiting_npcs.append(current_npc)
-		current_npc = null
-	
-	# Rush ALL exiting NPCs to exit at double speed
-	for npc in exiting_npcs:
-		if is_instance_valid(npc):
-			# Re-trigger move to exit at double speed (2 seconds instead of 4)
-			npc.move_to_exit(exit_slot.global_position, 2.0)
-	
-	# Disable player input and catching during cleanup
+	# Disable player input and catching immediately
 	if player:
 		player.level_active = false
 		player.can_catch = false
 		player.set_input_enabled(false)
+		print("Level5: Disabled player input and catching")
 	
-	# Wait for all NPCs to exit
+	# Handle current NPC if exists
+	if current_npc and is_instance_valid(current_npc):
+		print("Level5: Found current_npc in state: ", current_npc.current_state)
+		current_npc.stop_wait_timer()
+		current_npc.hide_emote()
+		# Move to exit at fast speed
+		current_npc.move_to_exit(exit_slot.global_position, 1.5)
+		if current_npc not in exiting_npcs:
+			exiting_npcs.append(current_npc)
+			print("Level5: Added current_npc to exiting list")
+		current_npc = null
+	
+	# Find any NPCs still in wait slots and rush them to exit
+	print("Level5: Checking wait slots for NPCs...")
+	for slot in wait_slots:
+		if slot and slot.get_child_count() > 0:
+			for child in slot.get_children():
+				if child.has_method("move_to_exit") and is_instance_valid(child):
+					print("Level5: Found NPC in wait slot, moving to exit")
+					child.stop_wait_timer()
+					child.hide_emote()
+					child.move_to_exit(exit_slot.global_position, 1.5)
+					if child not in exiting_npcs:
+						exiting_npcs.append(child)
+	
+	# Find any NPCs in the scene that aren't tracked yet
+	print("Level5: Searching for untracked NPCs in scene...")
+	var all_npcs = get_tree().get_nodes_in_group("npcs")
+	for npc in all_npcs:
+		if is_instance_valid(npc) and npc not in exiting_npcs and npc != current_npc:
+			print("Level5: Found untracked NPC, adding to exit list")
+			npc.stop_wait_timer()
+			npc.hide_emote()
+			npc.move_to_exit(exit_slot.global_position, 1.5)
+			exiting_npcs.append(npc)
+	
+	# Rush ALL exiting NPCs to exit at fast speed
+	print("Level5: Total NPCs to exit: ", exiting_npcs.size())
+	for npc in exiting_npcs:
+		if is_instance_valid(npc):
+			print("Level5: Moving NPC to exit from position: ", npc.global_position)
+			# Re-trigger move to exit at fast speed (1.5 seconds)
+			npc.move_to_exit(exit_slot.global_position, 1.5)
+	
+	# Wait for all NPCs to exit with timeout fallback
 	if exiting_npcs.size() > 0:
-		await wait_for_all_npcs_to_exit()
+		print("Level5: Waiting for NPCs to exit...")
+		await wait_for_all_npcs_to_exit_with_timeout()
+	else:
+		print("Level5: No NPCs to wait for, proceeding immediately")
 	
 	# Play outro animation before showing results
 	if boardroom_event and boardroom_event.has_node("AnimationPlayer"):
@@ -431,14 +466,35 @@ func trigger_special_ending():
 			get_tree().root.set_meta("selected_level", player.current_level)
 			get_tree().change_scene_to_file("res://Scenes/MainMenu.tscn")
 
-func wait_for_all_npcs_to_exit():
-	# Wait until all NPCs have exited
-	while exiting_npcs.size() > 0:
-		await get_tree().create_timer(0.1).timeout
+func wait_for_all_npcs_to_exit_with_timeout():
+	# Wait until all NPCs have exited with a 5 second timeout fallback
+	var timeout = 5.0
+	var elapsed = 0.0
+	var check_interval = 0.1
+	
+	while exiting_npcs.size() > 0 and elapsed < timeout:
+		await get_tree().create_timer(check_interval).timeout
+		elapsed += check_interval
+		
 		# Clean up invalid NPCs
 		for i in range(exiting_npcs.size() - 1, -1, -1):
 			if not is_instance_valid(exiting_npcs[i]):
+				print("Level5: Removed invalid NPC from exit list")
 				exiting_npcs.remove_at(i)
+		
+		if exiting_npcs.size() > 0 and int(elapsed * 10) % 10 == 0:
+			print("Level5: Still waiting for ", exiting_npcs.size(), " NPCs (elapsed: ", elapsed, "s)")
+	
+	if exiting_npcs.size() > 0:
+		print("Level5: WARNING - Timeout reached with ", exiting_npcs.size(), " NPCs remaining, forcing cleanup")
+		# Force cleanup - remove all NPCs immediately
+		for npc in exiting_npcs:
+			if is_instance_valid(npc):
+				print("Level5: Force removing NPC at position: ", npc.global_position)
+				npc.queue_free()
+		exiting_npcs.clear()
+	else:
+		print("Level5: All NPCs successfully exited")
 
 func _on_level_ended():
 	# Play announcement sound when level ends
